@@ -1235,7 +1235,7 @@ class Less_Parser
     //
     // U+0?? or U+00A1-00A9
     //
-    function parseUnicodeDescriptor()
+    protected function parseUnicodeDescriptor()
     {
         $ud = $this->MatchReg('/\\G(U\+[0-9a-fA-F?]+)(\-[0-9a-fA-F?]+)?/');
         if ($ud) {
@@ -1300,7 +1300,7 @@ class Less_Parser
     //
     // extend syntax - used to extend selectors
     //
-    function parseExtend($isRule = false)
+    protected function parseExtend($isRule = false)
     {
 
         $index      = $this->pos;
@@ -2048,7 +2048,7 @@ class Less_Parser
         }
     }
 
-    function parseAnonymousValue()
+    public function parseAnonymousValue()
     {
 
         if (preg_match('/\\G([^@+\/\'"*`(;{}-]*);/', $this->input, $match, 0, $this->pos)) {
@@ -2257,27 +2257,27 @@ class Less_Parser
 
         switch ($nonVendorSpecificName) {
             /*
-			case "@font-face":
-			case "@viewport":
-			case "@top-left":
-			case "@top-left-corner":
-			case "@top-center":
-			case "@top-right":
-			case "@top-right-corner":
-			case "@bottom-left":
-			case "@bottom-left-corner":
-			case "@bottom-center":
-			case "@bottom-right":
-			case "@bottom-right-corner":
-			case "@left-top":
-			case "@left-middle":
-			case "@left-bottom":
-			case "@right-top":
-			case "@right-middle":
-			case "@right-bottom":
-			hasBlock = true;
-			break;
-			*/
+            case "@font-face":
+            case "@viewport":
+            case "@top-left":
+            case "@top-left-corner":
+            case "@top-center":
+            case "@top-right":
+            case "@top-right-corner":
+            case "@bottom-left":
+            case "@bottom-left-corner":
+            case "@bottom-center":
+            case "@bottom-right":
+            case "@bottom-right-corner":
+            case "@left-top":
+            case "@left-middle":
+            case "@left-bottom":
+            case "@right-top":
+            case "@right-middle":
+            case "@right-bottom":
+            hasBlock = true;
+            break;
+            */
             case "@charset":
                 $hasIdentifier = true;
                 $hasBlock      = false;
@@ -2390,7 +2390,7 @@ class Less_Parser
      *
      * @return Less_Tree_Operation|null
      */
-    function parseMultiplication()
+    protected function parseMultiplication()
     {
 
         $return = $m = $this->parseOperand();

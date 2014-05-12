@@ -11,7 +11,7 @@ class Less_Mime
 
     // this map is intentionally incomplete
     // if you want more, install 'mime' dep
-    static $_types = array(
+    protected static $_types = array(
         '.htm'  => 'text/html',
         '.html' => 'text/html',
         '.gif'  => 'image/gif',

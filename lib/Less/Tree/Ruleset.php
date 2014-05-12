@@ -245,7 +245,7 @@ class Less_Tree_Ruleset extends Less_Tree
         return $ruleset;
     }
 
-    function evalImports($env)
+    public function evalImports($env)
     {
 
         $rules_len = count($this->rules);

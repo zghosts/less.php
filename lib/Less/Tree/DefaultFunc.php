@@ -9,8 +9,8 @@
 class Less_Tree_DefaultFunc
 {
 
-    static $error_;
-    static $value_;
+    protected static $error_;
+    protected static $value_;
 
     public static function compile()
     {

@@ -34,7 +34,8 @@ class Less_Tree_Attribute extends Less_Tree
         return new Less_Tree_Attribute(
             $key_obj ? $this->key->compile($env) : $this->key,
             $this->op,
-            $val_obj ? $this->value->compile($env) : $this->value);
+            $val_obj ? $this->value->compile($env) : $this->value
+        );
     }
 
     /**

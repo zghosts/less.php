@@ -9,8 +9,8 @@
 class Less_Tree_Unit extends Less_Tree
 {
 
-    var $numerator = array();
-    var $denominator = array();
+    public $numerator = array();
+    public $denominator = array();
     public $backupUnit;
     public $type = 'Unit';
 

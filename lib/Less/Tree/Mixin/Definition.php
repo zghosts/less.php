@@ -208,10 +208,8 @@ class Less_Tree_Mixin_Definition extends Less_Tree_Ruleset
 
         $compile_env         = new Less_Environment();
         $compile_env->frames = array_merge(
-            array($frame) // the parameter variables
-            ,
-            $this->frames // the parent namespace/mixin frames
-            ,
+            array($frame), // the parameter variables
+            $this->frames, // the parent namespace/mixin frames
             $env->frames // the current environment frames
         );
 

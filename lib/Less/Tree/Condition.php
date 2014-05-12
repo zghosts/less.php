@@ -59,11 +59,11 @@ class Less_Tree_Condition extends Less_Tree
                         $result = $this->op === '<' || $this->op === '=<' || $this->op === '<=';
                         break;
 
-                    case  0:
+                    case 0:
                         $result = $this->op === '=' || $this->op === '>=' || $this->op === '=<' || $this->op === '<=';
                         break;
 
-                    case  1:
+                    case 1:
                         $result = $this->op === '>' || $this->op === '>=';
                         break;
                 }
