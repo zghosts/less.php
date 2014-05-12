@@ -3,9 +3,10 @@
 /**
  * Compiler Exception
  *
- * @package Less
+ * @package    Less
  * @subpackage exception
  */
-class Less_Exception_Compiler extends Less_Exception_Parser{
+class Less_Exception_Compiler extends Less_Exception_Parser
+{
 
 }
