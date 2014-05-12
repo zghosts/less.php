@@ -616,7 +616,7 @@ class Less_Parser
             $parts[] = filesize($file_path);
             $parts[] = filemtime($file_path);
             $parts[] = $env;
-            $parts[] = Less_Version::cache_version;
+            $parts[] = Less_Version::CACHE_VERSION;
             $parts[] = Less_Parser::$options['cache_method'];
             return Less_Cache::$cache_dir . 'lessphp_' . base_convert(sha1(json_encode($parts)), 16, 36) . '.lesscache';
         }

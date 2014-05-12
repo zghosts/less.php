@@ -170,7 +170,7 @@ class Less_Cache
     {
 
         //save the file list
-        $temp = array(Less_Version::cache_version);
+        $temp = array(Less_Version::CACHE_VERSION);
         foreach ($files as $file) {
             $temp[] = filemtime($file) . "\t" . filesize($file) . "\t" . $file;
         }

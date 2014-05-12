@@ -60,7 +60,7 @@ EOD;
 
             case 'v':
             case 'version':
-                echo "lessc " . Less_Version::version . " (less.php)\n\n";
+                echo "lessc " . Less_Version::VERSION . " (less.php)\n\n";
                 exit;
 
             case 'rp':

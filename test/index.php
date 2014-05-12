@@ -862,7 +862,7 @@ $content = ob_get_clean();
 <?php
 
 echo '<div id="heading">';
-echo '<h1><a href="?">Less.php '.Less_Version::version.'</a></h1>';
+echo '<h1><a href="?">Less.php '.Less_Version::VERSION.'</a></h1>';
 echo $test_obj->Summary();
 echo '</div>';
 
