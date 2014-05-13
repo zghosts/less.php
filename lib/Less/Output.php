@@ -12,7 +12,7 @@ class Less_Output
     /**
      * Output holder
      *
-     * @var string
+     * @var array
      */
     protected $strs = array();
 
@@ -38,7 +38,6 @@ class Less_Output
     {
         return count($this->strs) === 0;
     }
-
 
     /**
      * Converts the output to string

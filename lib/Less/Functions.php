@@ -22,6 +22,11 @@ class Less_Functions
 
     /**
      * @param string $op
+     *
+     * @param int $a
+     * @param int $b
+     *
+     * @return float
      */
     public static function operate($op, $a, $b)
     {
@@ -37,11 +42,22 @@ class Less_Functions
         }
     }
 
+    /**
+     * @param     $val
+     * @param int $max
+     *
+     * @return mixed
+     */
     public static function clamp($val, $max = 1)
     {
         return min(max($val, 0), $max);
     }
 
+    /**
+     * @param $value
+     *
+     * @return float
+     */
     public static function fround($value)
     {
 
@@ -56,6 +72,12 @@ class Less_Functions
         return $value;
     }
 
+    /**
+     * @param $n
+     *
+     * @return float
+     * @throws Less_Exception_Compiler
+     */
     public static function number($n)
     {
 
@@ -120,6 +142,10 @@ class Less_Functions
 
     /**
      * @param double $h
+     * @param        $m1
+     * @param        $m2
+     *
+     * @return
      */
     public function hsla_hue($h, $m1, $m2)
     {
@@ -145,7 +171,12 @@ class Less_Functions
     }
 
     /**
+     * @param        $h
+     * @param        $s
+     * @param        $v
      * @param double $a
+     *
+     * @return \Less_Tree_Color
      */
     public function hsva($h, $s, $v, $a)
     {
@@ -270,7 +301,10 @@ class Less_Functions
     }
 
     /**
+     * @param                     $color
      * @param Less_Tree_Dimension $amount
+     *
+     * @return \Less_Tree_Color
      */
     public function desaturate($color, $amount)
     {
@@ -349,7 +383,11 @@ class Less_Functions
     //
 
     /**
-     * @param Less_Tree_Color $color1
+     * @param Less_Tree_Color     $color1
+     * @param Less_Tree_Color     $color2
+     * @param Less_Tree_Dimension $weight
+     *
+     * @return \Less_Tree_Color
      */
     public function mix($color1, $color2, $weight = null)
     {
@@ -640,6 +678,10 @@ class Less_Functions
 
     /**
      * @param boolean $isMin
+     * @param array   $args
+     *
+     * @throws Less_Exception_Compiler
+     * @return \Less_Tree_Anonymous
      */
     private function _minmax($isMin, $args)
     {
@@ -816,7 +858,10 @@ class Less_Functions
     }
 
     /**
-     * @param string $unit
+     * @param Less_Tree_Dimension $n
+     * @param string              $unit
+     *
+     * @return \Less_Tree_Keyword
      */
     public function isunit($n, $unit)
     {
@@ -826,23 +871,44 @@ class Less_Functions
     }
 
     /**
+     * @param        $n
      * @param string $type
+     *
+     * @return \Less_Tree_Keyword
      */
     private function _isa($n, $type)
     {
         return is_a($n, $type) ? new Less_Tree_Keyword('true') : new Less_Tree_Keyword('false');
     }
 
+    /**
+     * @param $color
+     * @param $amount
+     *
+     * @return Less_Tree_Color
+     */
     public function tint($color, $amount)
     {
         return $this->mix($this->rgb(255, 255, 255), $color, $amount);
     }
 
+    /**
+     * @param $color
+     * @param $amount
+     *
+     * @return Less_Tree_Color
+     */
     public function shade($color, $amount)
     {
         return $this->mix($this->rgb(0, 0, 0), $color, $amount);
     }
 
+    /**
+     * @param array $values
+     * @param $index
+     *
+     * @return null
+     */
     public function extract($values, $index)
     {
         $index = (int)$index->value - 1; // (1-based index)
@@ -861,12 +927,23 @@ class Less_Functions
         return null;
     }
 
+    /**
+     * @param $values
+     *
+     * @return Less_Tree_Dimension
+     */
     public function length($values)
     {
         $n = (property_exists($values, 'value') && is_array($values->value)) ? count($values->value) : 1;
         return new Less_Tree_Dimension($n);
     }
 
+    /**
+     * @param      $mimetypeNode
+     * @param null $filePathNode
+     *
+     * @return Less_Tree_Url
+     */
     public function datauri($mimetypeNode, $filePathNode = null)
     {
 
@@ -945,7 +1022,14 @@ class Less_Functions
         return new Less_Tree_Url(new Less_Tree_Anonymous($filePath));
     }
 
-    //svg-gradient
+    /**
+     * svg-gradient
+     *
+     * @param $direction
+     *
+     * @return Less_Tree_URL
+     * @throws Less_Exception_Compiler
+     */
     public function svggradient($direction)
     {
 
@@ -1032,6 +1116,9 @@ class Less_Functions
 
     /**
      * @param string $type
+     * @param        $arg
+     *
+     * @throws Less_Exception_Compiler
      */
     private static function Expected($type, $arg)
     {
@@ -1061,10 +1148,15 @@ class Less_Functions
         return strtr(rawurlencode($string), $revert);
     }
 
-
-    // Color Blending
-    // ref: http://www.w3.org/TR/compositing-1
-
+    /**
+     * Color Blending
+     * ref: http://www.w3.org/TR/compositing-1
+     * @param $mode
+     * @param $color1
+     * @param $color2
+     *
+     * @return Less_Tree_Color
+     */
     public function colorBlend($mode, $color1, $color2)
     {
         $ab = $color1->alpha; // backdrop
@@ -1085,31 +1177,67 @@ class Less_Functions
         return new Less_Tree_Color($r, $ar);
     }
 
+    /**
+     * @param $color1
+     * @param $color2
+     *
+     * @return Less_Tree_Color
+     */
     public function multiply($color1, $color2)
     {
         return $this->colorBlend(array($this, 'colorBlendMultiply'), $color1, $color2);
     }
 
+    /**
+     * @param $cb
+     * @param $cs
+     *
+     * @return mixed
+     */
     private function colorBlendMultiply($cb, $cs)
     {
         return $cb * $cs;
     }
 
+    /**
+     * @param $color1
+     * @param $color2
+     *
+     * @return Less_Tree_Color
+     */
     public function screen($color1, $color2)
     {
         return $this->colorBlend(array($this, 'colorBlendScreen'), $color1, $color2);
     }
 
+    /**
+     * @param $cb
+     * @param $cs
+     *
+     * @return mixed
+     */
     private function colorBlendScreen($cb, $cs)
     {
         return $cb + $cs - $cb * $cs;
     }
 
+    /**
+     * @param $color1
+     * @param $color2
+     *
+     * @return Less_Tree_Color
+     */
     public function overlay($color1, $color2)
     {
         return $this->colorBlend(array($this, 'colorBlendOverlay'), $color1, $color2);
     }
 
+    /**
+     * @param $cb
+     * @param $cs
+     *
+     * @return mixed
+     */
     private function colorBlendOverlay($cb, $cs)
     {
         $cb *= 2;
@@ -1118,11 +1246,23 @@ class Less_Functions
             : $this->colorBlendScreen($cb - 1, $cs);
     }
 
+    /**
+     * @param $color1
+     * @param $color2
+     *
+     * @return Less_Tree_Color
+     */
     public function softlight($color1, $color2)
     {
         return $this->colorBlend(array($this, 'colorBlendSoftlight'), $color1, $color2);
     }
 
+    /**
+     * @param $cb
+     * @param $cs
+     *
+     * @return mixed
+     */
     private function colorBlendSoftlight($cb, $cs)
     {
         $d = 1;
@@ -1135,52 +1275,112 @@ class Less_Functions
         return $cb - (1 - 2 * $cs) * $e * ($d - $cb);
     }
 
+    /**
+     * @param $color1
+     * @param $color2
+     *
+     * @return Less_Tree_Color
+     */
     public function hardlight($color1, $color2)
     {
         return $this->colorBlend(array($this, 'colorBlendHardlight'), $color1, $color2);
     }
 
+    /**
+     * @param $cb
+     * @param $cs
+     *
+     * @return mixed
+     */
     private function colorBlendHardlight($cb, $cs)
     {
         return $this->colorBlendOverlay($cs, $cb);
     }
 
+    /**
+     * @param $color1
+     * @param $color2
+     *
+     * @return Less_Tree_Color
+     */
     public function difference($color1, $color2)
     {
         return $this->colorBlend(array($this, 'colorBlendDifference'), $color1, $color2);
     }
 
+    /**
+     * @param $cb
+     * @param $cs
+     *
+     * @return number
+     */
     private function colorBlendDifference($cb, $cs)
     {
         return abs($cb - $cs);
     }
 
+    /**
+     * @param $color1
+     * @param $color2
+     *
+     * @return Less_Tree_Color
+     */
     public function exclusion($color1, $color2)
     {
         return $this->colorBlend(array($this, 'colorBlendExclusion'), $color1, $color2);
     }
 
+    /**
+     * @param $cb
+     * @param $cs
+     *
+     * @return mixed
+     */
     private function colorBlendExclusion($cb, $cs)
     {
         return $cb + $cs - 2 * $cb * $cs;
     }
 
+    /**
+     * @param $color1
+     * @param $color2
+     *
+     * @return Less_Tree_Color
+     */
     public function average($color1, $color2)
     {
         return $this->colorBlend(array($this, 'colorBlendAverage'), $color1, $color2);
     }
 
     // non-w3c functions:
+    /**
+     * @param $cb
+     * @param $cs
+     *
+     * @return float
+     */
     public function colorBlendAverage($cb, $cs)
     {
         return ($cb + $cs) / 2;
     }
 
+    /**
+     * @param $color1
+     * @param $color2
+     *
+     * @return Less_Tree_Color
+     */
     public function negation($color1, $color2)
     {
         return $this->colorBlend(array($this, 'colorBlendNegation'), $color1, $color2);
     }
 
+    /**
+     * @param $cb
+     * @param $cs
+     *
+     * @return int
+     */
     public function colorBlendNegation($cb, $cs)
     {
         return 1 - abs($cb + $cs - 1);

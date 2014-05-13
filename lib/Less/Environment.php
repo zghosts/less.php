@@ -18,10 +18,16 @@ class Less_Environment
     //public $processImports;				// option - whether to process imports. if false then imports will not be imported
     //public $javascriptEnabled;			// option - whether JavaScript is enabled. if undefined, defaults to true
     //public $useFileCache;					// browser only - whether to use the per file session cache
+
+    /**
+     * @var array
+     */
     public $currentFileInfo; // information about the current file - for error reporting and importing and making urls relative etc.
 
+    /**
+     * @var bool
+     */
     public $importMultiple = false; // whether we are currently importing multiple copies
-
 
     /**
      * @var array
@@ -97,7 +103,11 @@ class Less_Environment
         }
     }
 
-
+    /**
+     * @param array $frames
+     *
+     * @return Less_Environment
+     */
     public function copyEvalEnv($frames = array())
     {
         $new_env         = new Less_Environment();
@@ -105,12 +115,19 @@ class Less_Environment
         return $new_env;
     }
 
-
+    /**
+     * @return bool
+     */
     public static function isMathOn()
     {
         return !Less_Parser::$options['strictMath'] || Less_Environment::$parensStack;
     }
 
+    /**
+     * @param string $path
+     *
+     * @return bool
+     */
     public static function isPathRelative($path)
     {
         return !preg_match('/^(?:[a-z-]+:|\/)/', $path);
@@ -121,7 +138,7 @@ class Less_Environment
      * Canonicalize a path by resolving references to '/./', '/../'
      * Does not remove leading "../"
      *
-     * @param string path or url
+     * @param string $path path or url
      *
      * @return string Canonicalized path
      *
@@ -162,12 +179,17 @@ class Less_Environment
         return implode('/', $path);
     }
 
-
+    /**
+     * @param $frame
+     */
     public function unshiftFrame($frame)
     {
         array_unshift($this->frames, $frame);
     }
 
+    /**
+     * @return mixed
+     */
     public function shiftFrame()
     {
         return array_shift($this->frames);

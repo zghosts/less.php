@@ -39,6 +39,8 @@ class Less_Tree_Url extends Less_Tree
 
     /**
      * @param Less_Functions $ctx
+     *
+     * @return \Less_Tree_Url
      */
     public function compile($ctx)
     {

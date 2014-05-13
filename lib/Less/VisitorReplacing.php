@@ -8,7 +8,11 @@
  */
 class Less_VisitorReplacing extends Less_Visitor
 {
-
+    /**
+     * @param $node
+     *
+     * @return mixed
+     */
     public function visitObj($node)
     {
 
@@ -36,6 +40,11 @@ class Less_VisitorReplacing extends Less_Visitor
         return $node;
     }
 
+    /**
+     * @param $nodes
+     *
+     * @return array|mixed
+     */
     public function visitArray($nodes)
     {
 
@@ -53,6 +62,12 @@ class Less_VisitorReplacing extends Less_Visitor
         return $newNodes;
     }
 
+    /**
+     * @param array $arr
+     * @param array $out
+     *
+     * @return array
+     */
     public function flatten($arr, &$out)
     {
 

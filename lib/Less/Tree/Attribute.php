@@ -14,6 +14,11 @@ class Less_Tree_Attribute extends Less_Tree
     public $value;
     public $type = 'Attribute';
 
+    /**
+     * @param $key
+     * @param $op
+     * @param $value
+     */
     public function __construct($key, $op, $value)
     {
         $this->key   = $key;
@@ -21,6 +26,11 @@ class Less_Tree_Attribute extends Less_Tree
         $this->value = $value;
     }
 
+    /**
+     * @param Less_Environment $env
+     *
+     * @return $this|Less_Tree_Attribute
+     */
     public function compile($env)
     {
 
@@ -46,6 +56,9 @@ class Less_Tree_Attribute extends Less_Tree
         $output->add($this->toCSS());
     }
 
+    /**
+     * @return string
+     */
     public function toCSS()
     {
         $value = $this->key;

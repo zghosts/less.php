@@ -51,12 +51,24 @@ class Less_Parser
      */
     private $env;
 
+    /**
+     * @var array
+     */
     private $rules = array();
 
+    /**
+     * @var array
+     */
     private static $imports = array();
 
+    /**
+     * @var bool
+     */
     public static $has_extends = false;
 
+    /**
+     * @var int
+     */
     public static $next_id = 0;
 
     /**
@@ -122,6 +134,8 @@ class Less_Parser
     /**
      * Set one compiler option
      *
+     * @param string $option
+     * @param $value
      */
     public function SetOption($option, $value)
     {
@@ -272,7 +286,7 @@ class Less_Parser
      * Parse a Less string into css
      *
      * @param string $str      The string to convert
-     * @param string $uri_root The url of the file
+     * @param string $file_uri The url of the file
      *
      * @return Less_Tree_Ruleset|Less_Parser
      */
@@ -371,6 +385,7 @@ class Less_Parser
 
     /**
      * @param string $filename
+     * @param string $uri_root
      */
     public function SetFileInfo($filename, $uri_root = '')
     {
@@ -479,6 +494,9 @@ class Less_Parser
      * Use cache and save cached results if possible
      *
      * @param string|null $file_path
+     *
+     * @throws Less_Exception_Chunk
+     * @return array|mixed
      */
     private function GetRules($file_path)
     {
@@ -628,21 +646,25 @@ class Less_Parser
         self::$imports[] = $file;
     }
 
-    static function AllParsedFiles()
+    /**
+     * @return array
+     */
+    public static function AllParsedFiles()
     {
         return self::$imports;
     }
 
     /**
      * @param string $file
+     *
+     * @return bool
      */
-    static function FileParsed($file)
+    public static function FileParsed($file)
     {
         return in_array($file, self::$imports);
     }
 
-
-    function save()
+    protected function save()
     {
         $this->saveStack[] = $this->pos;
     }
@@ -759,6 +781,8 @@ class Less_Parser
 
     /**
      * @param string $tok
+     *
+     * @return bool
      */
     public function PeekChar($tok)
     {
@@ -788,6 +812,8 @@ class Less_Parser
     /**
      * @param string      $tok
      * @param string|null $msg
+     *
+     * @return array
      */
     public function expect($tok, $msg = null)
     {
@@ -801,6 +827,9 @@ class Less_Parser
 
     /**
      * @param string $tok
+     * @param null   $msg
+     *
+     * @return
      */
     public function expectChar($tok, $msg = null)
     {
@@ -1420,6 +1449,8 @@ class Less_Parser
 
     /**
      * @param boolean $isCall
+     *
+     * @return array
      */
     private function parseMixinArgs($isCall)
     {
@@ -2690,7 +2721,10 @@ class Less_Parser
     /**
      * Some versions of php have trouble with method_exists($a,$b) if $a is not an object
      *
+     * @param        $a
      * @param string $b
+     *
+     * @return bool
      */
     public static function is_method($a, $b)
     {
@@ -2721,6 +2755,8 @@ class Less_Parser
 
     /**
      * Create Less_Tree_* objects and optionally generate a cache string
+     *
+     * @param string $class
      *
      * @return mixed
      */
@@ -2810,6 +2846,8 @@ class Less_Parser
 
     /**
      * Convert an argument to a string for use in the parser cache
+     *
+     * @param mixed $arg
      *
      * @return string
      */

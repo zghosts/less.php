@@ -9,8 +9,11 @@
 class Less_Mime
 {
 
-    // this map is intentionally incomplete
-    // if you want more, install 'mime' dep
+    /**
+     * this map is intentionally incomplete
+     * if you want more, install 'mime' dep
+     * @var array
+     */
     protected static $_types = array(
         '.htm'  => 'text/html',
         '.html' => 'text/html',
@@ -20,6 +23,11 @@ class Less_Mime
         '.png'  => 'image/png'
     );
 
+    /**
+     * @param string $filepath
+     *
+     * @return null
+     */
     public static function lookup($filepath)
     {
         $parts = explode('.', $filepath);
@@ -31,6 +39,11 @@ class Less_Mime
         return self::$_types[$ext];
     }
 
+    /**
+     * @param string $type
+     *
+     * @return string
+     */
     public static function charsets_lookup($type = null)
     {
         // assumes all text types are UTF-8

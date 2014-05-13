@@ -16,6 +16,13 @@ class Less_Tree_Condition extends Less_Tree
     public $negate;
     public $type = 'Condition';
 
+    /**
+     * @param      $op
+     * @param      $l
+     * @param      $r
+     * @param int  $i
+     * @param bool $negate
+     */
     public function __construct($op, $l, $r, $i = 0, $negate = false)
     {
         $this->op     = trim($op);
@@ -25,12 +32,21 @@ class Less_Tree_Condition extends Less_Tree
         $this->negate = $negate;
     }
 
+    /**
+     * @param Less_Visitor $visitor
+     */
     public function accept($visitor)
     {
         $this->lvalue = $visitor->visitObj($this->lvalue);
         $this->rvalue = $visitor->visitObj($this->rvalue);
     }
 
+    /**
+     * @param Less_Environment $env
+     *
+     * @return bool
+     * @throws Less_Exception_Compiler
+     */
     public function compile($env)
     {
         $a = $this->lvalue->compile($env);

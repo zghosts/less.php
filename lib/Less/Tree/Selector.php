@@ -27,6 +27,11 @@ class Less_Tree_Selector extends Less_Tree
     public $cacheable = true;
 
     /**
+     * @param         $elements
+     * @param array   $extendList
+     * @param null    $condition
+     * @param null    $index
+     * @param null    $currentFileInfo
      * @param boolean $isReferenced
      */
     public function __construct(

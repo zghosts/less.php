@@ -58,6 +58,8 @@ class Less_Tree_Unit extends Less_Tree
 
     /**
      * @param Less_Tree_Unit $other
+     *
+     * @return int
      */
     public function compare($other)
     {

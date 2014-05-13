@@ -13,17 +13,29 @@ class Less_Tree_Assignment extends Less_Tree
     public $value;
     public $type = 'Assignment';
 
+    /**
+     * @param $key
+     * @param $val
+     */
     public function __construct($key, $val)
     {
         $this->key   = $key;
         $this->value = $val;
     }
 
+    /**
+     * @param $visitor
+     */
     public function accept($visitor)
     {
         $this->value = $visitor->visitObj($this->value);
     }
 
+    /**
+     * @param Less_Environment $env
+     *
+     * @return Less_Tree_Assignment
+     */
     public function compile($env)
     {
         return new Less_Tree_Assignment($this->key, $this->value->compile($env));

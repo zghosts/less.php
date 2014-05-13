@@ -20,7 +20,13 @@ class Less_Tree_Rule extends Less_Tree
     public $type = 'Rule';
 
     /**
+     * @param        $name
+     * @param null   $value
      * @param string $important
+     * @param null   $merge
+     * @param null   $index
+     * @param null   $currentFileInfo
+     * @param bool   $inline
      */
     public function __construct(
         $name,

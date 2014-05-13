@@ -209,7 +209,7 @@ class Less_Tree_Import extends Less_Tree
     /**
      * Using the import directories, get the full absolute path and uri of the import
      *
-     * @param Less_Tree_Import $evald
+     * @return array
      */
     public function PathAndUri()
     {
@@ -257,9 +257,12 @@ class Less_Tree_Import extends Less_Tree
         }
     }
 
-
     /**
      * Parse the import url and return the rules
+     *
+     * @param $full_path
+     * @param $uri
+     * @param $env
      *
      * @return Less_Tree_Media|array
      */
@@ -288,6 +291,9 @@ class Less_Tree_Import extends Less_Tree
 
     /**
      * Should the import be skipped?
+     *
+     * @param $path
+     * @param $env
      *
      * @return boolean|null
      */

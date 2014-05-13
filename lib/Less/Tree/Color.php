@@ -13,6 +13,11 @@ class Less_Tree_Color extends Less_Tree
     public $isTransparentKeyword;
     public $type = 'Color';
 
+    /**
+     * @param      $rgb
+     * @param int  $a
+     * @param null $isTransparentKeyword
+     */
     public function __construct($rgb, $a = 1, $isTransparentKeyword = null)
     {
 
@@ -40,11 +45,17 @@ class Less_Tree_Color extends Less_Tree
         $this->alpha = is_numeric($a) ? $a : 1;
     }
 
+    /**
+     * @return $this
+     */
     public function compile()
     {
         return $this;
     }
 
+    /**
+     * @return float
+     */
     public function luma()
     {
         $r = $this->rgb[0] / 255;
@@ -66,6 +77,11 @@ class Less_Tree_Color extends Less_Tree
         $output->add($this->toCSS());
     }
 
+    /**
+     * @param bool $doNotCompress
+     *
+     * @return string
+     */
     public function toCSS($doNotCompress = false)
     {
         $compress = Less_Parser::$options['compress'] && !$doNotCompress;
@@ -107,15 +123,17 @@ class Less_Tree_Color extends Less_Tree
         }
     }
 
-    //
-    // Operations have to be done per-channel, if not,
-    // channels will spill onto each other. Once we have
-    // our result, in the form of an integer triplet,
-    // we create a new Color node to hold the result.
-    //
-
     /**
+     * Operations have to be done per-channel, if not,
+     * channels will spill onto each other. Once we have
+     * our result, in the form of an integer triplet,
+     * we create a new Color node to hold the result.
+     *
      * @param string $op
+     *
+     * @param        $other
+     *
+     * @return \Less_Tree_Color
      */
     public function operate($op, $other)
     {
@@ -127,11 +145,17 @@ class Less_Tree_Color extends Less_Tree
         return new Less_Tree_Color($rgb, $alpha);
     }
 
+    /**
+     * @return string
+     */
     public function toRGB()
     {
         return $this->toHex($this->rgb);
     }
 
+    /**
+     * @return array
+     */
     public function toHSL()
     {
         $r = $this->rgb[0] / 255;
@@ -164,7 +188,11 @@ class Less_Tree_Color extends Less_Tree
         return array('h' => $h * 360, 's' => $s, 'l' => $l, 'a' => $a);
     }
 
-    //Adapted from http://mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-algorithms-in-javascript
+    /**
+     * Adapted from http://mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-algorithms-in-javascript
+     *
+     * @return array
+     */
     public function toHSV()
     {
         $r = $this->rgb[0] / 255;
@@ -202,12 +230,20 @@ class Less_Tree_Color extends Less_Tree
         return array('h' => $h * 360, 's' => $s, 'v' => $v, 'a' => $a);
     }
 
+    /**
+     * @return string
+     */
     public function toARGB()
     {
         $argb = array_merge((array)Less_Parser::round($this->alpha * 255), $this->rgb);
         return $this->toHex($argb);
     }
 
+    /**
+     * @param $x
+     *
+     * @return int
+     */
     public function compare($x)
     {
 
@@ -222,6 +258,11 @@ class Less_Tree_Color extends Less_Tree
             $x->alpha === $this->alpha) ? 0 : -1;
     }
 
+    /**
+     * @param $v
+     *
+     * @return string
+     */
     public function toHex($v)
     {
 
@@ -240,6 +281,8 @@ class Less_Tree_Color extends Less_Tree
 
     /**
      * @param string $keyword
+     *
+     * @return \Less_Tree_Color
      */
     public static function fromKeyword($keyword)
     {

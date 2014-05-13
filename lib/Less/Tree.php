@@ -32,6 +32,7 @@ class Less_Tree
 
 
     /**
+     * @param                     $output
      * @param Less_Tree_Ruleset[] $rules
      */
     public static function outputRuleset($output, $rules)
@@ -68,11 +69,16 @@ class Less_Tree
 
     }
 
+    /**
+     * @param $visitor
+     */
     public function accept($visitor)
     {
     }
 
-
+    /**
+     * @param $rules
+     */
     public static function ReferencedArray($rules)
     {
         foreach ($rules as $rule) {

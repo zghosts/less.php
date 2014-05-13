@@ -17,6 +17,10 @@ class Less_Tree_Quoted extends Less_Tree
 
     /**
      * @param string $str
+     * @param string $content
+     * @param bool   $escaped
+     * @param bool   $index
+     * @param null   $currentFileInfo
      */
     public function __construct($str, $content = '', $escaped = false, $index = false, $currentFileInfo = null)
     {

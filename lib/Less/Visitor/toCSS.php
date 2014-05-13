@@ -18,6 +18,8 @@ class Less_Visitor_toCSS extends Less_VisitorReplacing
 
     /**
      * @param Less_Tree_Ruleset $root
+     *
+     * @return mixed
      */
     public function run($root)
     {
@@ -186,6 +188,8 @@ class Less_Visitor_toCSS extends Less_VisitorReplacing
 
     /**
      * Helper function for visitRuleset()
+     *
+     * @param $rulesetNode
      *
      * @return array
      */

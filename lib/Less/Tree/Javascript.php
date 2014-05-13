@@ -15,6 +15,7 @@ class Less_Tree_Javascript extends Less_Tree
     public $index;
 
     /**
+     * @param string  $string
      * @param boolean $index
      * @param boolean $escaped
      */

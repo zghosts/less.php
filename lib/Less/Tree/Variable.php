@@ -17,6 +17,8 @@ class Less_Tree_Variable extends Less_Tree
 
     /**
      * @param string $name
+     * @param null   $index
+     * @param null   $currentFileInfo
      */
     public function __construct($name, $index = null, $currentFileInfo = null)
     {
@@ -25,6 +27,12 @@ class Less_Tree_Variable extends Less_Tree
         $this->currentFileInfo = $currentFileInfo;
     }
 
+    /**
+     * @param Less_Environment $env
+     *
+     * @return mixed
+     * @throws Less_Exception_Compiler
+     */
     public function compile($env)
     {
 

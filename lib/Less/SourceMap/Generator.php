@@ -78,6 +78,7 @@ class Less_SourceMap_Generator extends Less_Configurable
      * Constructor
      *
      * @param Less_Tree_Ruleset $root    The root node
+     * @param                   $contentsMap
      * @param array             $options Array of options
      */
     public function __construct(Less_Tree_Ruleset $root, $contentsMap, $options = array())
@@ -141,6 +142,7 @@ class Less_SourceMap_Generator extends Less_Configurable
      * @param string $file    The absolute path to a file
      * @param string $content The content to write
      *
+     * @return bool
      * @throws Exception If the file could not be saved
      */
     protected function saveMap($file, $content)
@@ -192,7 +194,8 @@ class Less_SourceMap_Generator extends Less_Configurable
      * @param integer $generatedColumn The column number in generated file
      * @param integer $originalLine    The line number in original file
      * @param integer $originalColumn  The column number in original file
-     * @param string  $sourceFile      The original source file
+     * @param string  $fileInfo        The original source file
+     *
      */
     public function addMapping($generatedLine, $generatedColumn, $originalLine, $originalColumn, $fileInfo)
     {

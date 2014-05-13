@@ -208,7 +208,10 @@ class Less_Exception_Chunk extends Less_Exception_Parser
         return ord($this->input[$pos]);
     }
 
-
+    /**
+     * @param      $msg
+     * @param null $index
+     */
     public function fail($msg, $index = null)
     {
 

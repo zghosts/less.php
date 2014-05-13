@@ -13,22 +13,35 @@ class Less_Visitor_joinSelector extends Less_Visitor
 
     /**
      * @param Less_Tree_Ruleset $root
+     *
+     * @return mixed
      */
     public function run($root)
     {
         return $this->visitObj($root);
     }
 
+    /**
+     * @param $ruleNode
+     * @param $visitDeeper
+     */
     public function visitRule($ruleNode, &$visitDeeper)
     {
         $visitDeeper = false;
     }
 
+    /**
+     * @param $mixinDefinitionNode
+     * @param $visitDeeper
+     */
     public function visitMixinDefinition($mixinDefinitionNode, &$visitDeeper)
     {
         $visitDeeper = false;
     }
 
+    /**
+     * @param $rulesetNode
+     */
     public function visitRuleset($rulesetNode)
     {
 

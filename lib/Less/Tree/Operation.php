@@ -16,6 +16,8 @@ class Less_Tree_Operation extends Less_Tree
 
     /**
      * @param string $op
+     * @param        $operands
+     * @param bool   $isSpaced
      */
     public function __construct($op, $operands, $isSpaced = false)
     {

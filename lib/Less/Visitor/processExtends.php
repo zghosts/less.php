@@ -13,6 +13,8 @@ class Less_Visitor_processExtends extends Less_Visitor
 
     /**
      * @param Less_Tree_Ruleset $root
+     *
+     * @return \Less_Tree_Ruleset|mixed
      */
     public function run($root)
     {
@@ -303,7 +305,12 @@ class Less_Visitor_processExtends extends Less_Visitor
 
 
     /**
+     * @param         $potentialMatch
+     * @param         $needleElements
+     * @param         $haystackElement
      * @param integer $hackstackElementIndex
+     *
+     * @return null
      */
     private function PotentialMatch($potentialMatch, $needleElements, $haystackElement, $hackstackElementIndex)
     {
@@ -335,7 +342,12 @@ class Less_Visitor_processExtends extends Less_Visitor
         return $potentialMatch;
     }
 
-
+    /**
+     * @param $elementValue1
+     * @param $elementValue2
+     *
+     * @return bool
+     */
     private function isElementValuesEqual($elementValue1, $elementValue2)
     {
 
@@ -359,9 +371,11 @@ class Less_Visitor_processExtends extends Less_Visitor
         return false;
     }
 
-
     /**
      * @param Less_Tree_Selector $elementValue1
+     * @param                    $elementValue2
+     *
+     * @return bool
      */
     private function isSelectorValuesEqual($elementValue1, $elementValue2)
     {
@@ -394,6 +408,9 @@ class Less_Visitor_processExtends extends Less_Visitor
 
     /**
      * @param Less_Tree_Attribute $elementValue1
+     * @param                     $elementValue2
+     *
+     * @return bool
      */
     private function isAttributeValuesEqual($elementValue1, $elementValue2)
     {
@@ -415,7 +432,13 @@ class Less_Visitor_processExtends extends Less_Visitor
         return $elementValue1 === $elementValue2;
     }
 
-
+    /**
+     * @param $matches
+     * @param $selectorPath
+     * @param $replacementSelector
+     *
+     * @return array
+     */
     private function extendSelector($matches, $selectorPath, $replacementSelector)
     {
 

@@ -22,6 +22,8 @@ class Less_Visitor_extendFinder extends Less_Visitor
 
     /**
      * @param Less_Tree_Ruleset $root
+     *
+     * @return \Less_Tree_Ruleset|mixed
      */
     public function run($root)
     {

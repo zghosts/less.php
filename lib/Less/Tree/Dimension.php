@@ -83,12 +83,15 @@ class Less_Tree_Dimension extends Less_Tree
         return $this->toCSS();
     }
 
-    // In an operation between two Dimensions,
-    // we default to the first Dimension's unit,
-    // so `1px + 2em` will yield `3px`.
-
     /**
+     * In an operation between two Dimensions,
+     * we default to the first Dimension's unit,
+     * so `1px + 2em` will yield `3px`.
      * @param string $op
+     * @param        $other
+     *
+     * @throws Less_Exception_Compiler
+     * @return \Less_Tree_Dimension
      */
     public function operate($op, $other)
     {
@@ -129,6 +132,11 @@ class Less_Tree_Dimension extends Less_Tree
         return new Less_Tree_Dimension($value, $unit);
     }
 
+    /**
+     * @param $other
+     *
+     * @return int
+     */
     public function compare($other)
     {
         if ($other instanceof Less_Tree_Dimension) {

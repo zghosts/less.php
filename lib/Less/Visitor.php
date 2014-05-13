@@ -8,8 +8,14 @@
  */
 class Less_Visitor
 {
-
+    /**
+     * @var array
+     */
     protected $methods = array();
+
+    /**
+     * @var array
+     */
     protected $_visitFnCache = array();
 
     public function __construct()
@@ -18,6 +24,11 @@ class Less_Visitor
         $this->_visitFnCache = array_flip($this->_visitFnCache);
     }
 
+    /**
+     * @param $node
+     *
+     * @return mixed
+     */
     public function visitObj($node)
     {
 
@@ -43,6 +54,11 @@ class Less_Visitor
         return $node;
     }
 
+    /**
+     * @param $nodes
+     *
+     * @return mixed
+     */
     public function visitArray($nodes)
     {
         array_map(array($this, 'visitObj'), $nodes);

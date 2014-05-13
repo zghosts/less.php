@@ -24,6 +24,7 @@ class Less_Cache
      * @param array   $parser_options Array of compiler options
      * @param boolean $use_cache      Set to false to regenerate the css file
      *
+     * @throws Exception
      * @return string Name of the css file
      */
     public static function Get($less_files, $parser_options = array(), $use_cache = true)

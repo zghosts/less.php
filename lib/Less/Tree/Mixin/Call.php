@@ -181,9 +181,11 @@ class Less_Tree_Mixin_Call extends Less_Tree
         return implode(', ', $message);
     }
 
-
     /**
      * Are we in a recursive mixin call?
+     *
+     * @param Less_Environment $env
+     * @param $mixin
      *
      * @return bool
      */

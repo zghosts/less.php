@@ -16,7 +16,9 @@ class Less_Tree_Anonymous extends Less_Tree
     public $type = 'Anonymous';
 
     /**
+     * @param mixed   $value
      * @param integer $index
+     * @param null    $currentFileInfo
      * @param boolean $mapLines
      */
     public function __construct($value, $index = null, $currentFileInfo = null, $mapLines = null)
@@ -27,11 +29,19 @@ class Less_Tree_Anonymous extends Less_Tree
         $this->currentFileInfo = $currentFileInfo;
     }
 
+    /**
+     * @return Less_Tree_Anonymous
+     */
     public function compile()
     {
         return new Less_Tree_Anonymous($this->value, $this->index, $this->currentFileInfo, $this->mapLines);
     }
 
+    /**
+     * @param mixed $x
+     *
+     * @return int
+     */
     public function compare($x)
     {
         if (!is_object($x)) {

@@ -59,11 +59,12 @@ class Less_Autoloader
      * Loads the class
      *
      * @param string $className The class to load
+     *
+     * @throws Exception
+     * @return bool
      */
     public static function loadClass($className)
     {
-
-
         // handle only package classes
         if (strpos($className, 'Less_') !== 0) {
             return;

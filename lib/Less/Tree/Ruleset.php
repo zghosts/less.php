@@ -53,6 +53,9 @@ class Less_Tree_Ruleset extends Less_Tree
         $this->SetRulesetIndex();
     }
 
+    /**
+     * @param Less_Visitor $visitor
+     */
     public function accept($visitor)
     {
         if ($this->paths) {
@@ -69,6 +72,11 @@ class Less_Tree_Ruleset extends Less_Tree
         }
     }
 
+    /**
+     * @param Less_Environment $env
+     *
+     * @return Less_Tree_Ruleset
+     */
     public function compile($env)
     {
 
@@ -142,6 +150,7 @@ class Less_Tree_Ruleset extends Less_Tree
      * Compile Less_Tree_Mixin_Call objects
      *
      * @param Less_Tree_Ruleset $ruleset
+     * @param                   $env
      * @param integer           $rsRuleCnt
      */
     private function EvalMixinCalls($ruleset, $env, &$rsRuleCnt)

@@ -196,6 +196,8 @@ class Less_SourceMap_Base64VLQ
      * even on a 64 bit machine.
      *
      * @param string $aValue
+     *
+     * @return int
      */
     public function toVLQSigned($aValue)
     {
@@ -213,6 +215,8 @@ class Less_SourceMap_Base64VLQ
      * even on a 64 bit machine.
      *
      * @param integer $aValue
+     *
+     * @return int
      */
     public function fromVLQSigned($aValue)
     {
