@@ -59,5 +59,4 @@ class Less_Tree_Variable extends Less_Tree
 
         throw new Less_Exception_Compiler("variable " . $name . " is undefined", null, $this->index);
     }
-
 }

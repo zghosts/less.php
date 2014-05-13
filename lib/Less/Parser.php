@@ -1211,9 +1211,9 @@ class Less_Parser
     {
         $index = $this->pos;
 
-        if ($this->input_len > ($this->pos + 1) && $this->input[$this->pos] === '@' && ($curly = $this->MatchReg(
-                '/\\G@\{([\w-]+)\}/'
-            ))
+        if ($this->input_len > ($this->pos + 1) &&
+            $this->input[$this->pos] === '@' &&
+            ($curly = $this->MatchReg('/\\G@\{([\w-]+)\}/'))
         ) {
             return $this->NewObj3('Less_Tree_Variable', array('@' . $curly[1], $index, $this->env->currentFileInfo));
         }
@@ -1829,9 +1829,10 @@ class Less_Parser
         $c          = null;
         $index      = $this->pos;
 
-        while (($isLess && ($extend = $this->parseExtend())) || ($isLess && ($when = $this->MatchReg(
-                    '/\\Gwhen/'
-                ))) || ($e = $this->parseElement())) {
+        while (($isLess && ($extend = $this->parseExtend())) ||
+            ($isLess && ($when = $this->MatchReg('/\\Gwhen/')))
+            || ($e = $this->parseElement())
+        ) {
             if ($when) {
                 $condition = $this->expect('parseConditions', 'expected condition');
             } elseif ($condition) {
@@ -2662,7 +2663,8 @@ class Less_Parser
             ;
         } // !
 
-        if ((count($name) > 1) && $this->rulePropertyMatch(
+        if ((count($name) > 1) &&
+            $this->rulePropertyMatch(
                 '/\\G\s*((?:\+_|\+)?)\s*:/',
                 $offset,
                 $length,
@@ -2731,7 +2733,6 @@ class Less_Parser
         return is_object($a) && method_exists($a, $b);
     }
 
-
     /**
      * Round numbers similarly to javascript
      * eg: 1.499999 to 1 instead of 2
@@ -2769,6 +2770,12 @@ class Less_Parser
         return $obj;
     }
 
+    /**
+     * @param string $class
+     * @param array  $arg
+     *
+     * @return mixed
+     */
     public function NewObj1($class, $arg)
     {
         $obj = new $class($arg);
@@ -2778,6 +2785,12 @@ class Less_Parser
         return $obj;
     }
 
+    /**
+     * @param string $class
+     * @param array  $args
+     *
+     * @return mixed
+     */
     public function NewObj2($class, $args)
     {
         $obj = new $class($args[0], $args[1]);
@@ -2787,6 +2800,12 @@ class Less_Parser
         return $obj;
     }
 
+    /**
+     * @param string $class
+     * @param array  $args
+     *
+     * @return mixed
+     */
     public function NewObj3($class, $args)
     {
         $obj = new $class($args[0], $args[1], $args[2]);
@@ -2796,6 +2815,12 @@ class Less_Parser
         return $obj;
     }
 
+    /**
+     * @param string $class
+     * @param array  $args
+     *
+     * @return mixed
+     */
     public function NewObj4($class, $args)
     {
         $obj = new $class($args[0], $args[1], $args[2], $args[3]);
@@ -2805,6 +2830,12 @@ class Less_Parser
         return $obj;
     }
 
+    /**
+     * @param string $class
+     * @param array  $args
+     *
+     * @return mixed
+     */
     public function NewObj5($class, $args)
     {
         $obj = new $class($args[0], $args[1], $args[2], $args[3], $args[4]);
@@ -2814,6 +2845,12 @@ class Less_Parser
         return $obj;
     }
 
+    /**
+     * @param string $class
+     * @param array  $args
+     *
+     * @return mixed
+     */
     public function NewObj6($class, $args)
     {
         $obj = new $class($args[0], $args[1], $args[2], $args[3], $args[4], $args[5]);
@@ -2823,6 +2860,12 @@ class Less_Parser
         return $obj;
     }
 
+    /**
+     * @param string $class
+     * @param array  $args
+     *
+     * @return mixed
+     */
     public function NewObj7($class, $args)
     {
         $obj = new $class($args[0], $args[1], $args[2], $args[3], $args[4], $args[5], $args[6]);

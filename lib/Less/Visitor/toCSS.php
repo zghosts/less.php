@@ -68,10 +68,9 @@ class Less_Visitor_toCSS extends Less_VisitorReplacing
 
     public function visitDirective($directiveNode)
     {
-        if (isset($directiveNode->currentFileInfo['reference']) && (!property_exists(
-                    $directiveNode,
-                    'isReferenced'
-                ) || !$directiveNode->isReferenced)
+        if (isset($directiveNode->currentFileInfo['reference']) &&
+            (!property_exists($directiveNode, 'isReferenced') ||
+            !$directiveNode->isReferenced)
         ) {
             return array();
         }

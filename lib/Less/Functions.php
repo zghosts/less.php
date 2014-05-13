@@ -1083,9 +1083,8 @@ class Less_Functions
                 $position = null;
             }
 
-            if (!($color instanceof Less_Tree_Color) || (!(($i === 0 || $i + 1 === count(
-                                $stops
-                            )) && $position === null) && !($position instanceof Less_Tree_Dimension))
+            if (!($color instanceof Less_Tree_Color) ||
+                (!(($i === 0 || $i + 1 === count($stops)) && $position === null) && !($position instanceof Less_Tree_Dimension))
             ) {
                 throw new Less_Exception_Compiler($throw_message);
             }
@@ -1097,8 +1096,7 @@ class Less_Functions
                 $positionValue = '100%';
             }
             $alpha = $color->alpha;
-            $returner .= '<stop offset="' . $positionValue . '" stop-color="' . $color->toRGB(
-                ) . '"' . ($alpha < 1 ? ' stop-opacity="' . $alpha . '"' : '') . '/>';
+            $returner .= '<stop offset="' . $positionValue . '" stop-color="' . $color->toRGB() . '"' . ($alpha < 1 ? ' stop-opacity="' . $alpha . '"' : '') . '/>';
         }
 
         $returner .= '</' . $gradientType . 'Gradient><rect ' . $rectangleDimension . ' fill="url(#gradient)" /></svg>';
@@ -1128,9 +1126,10 @@ class Less_Functions
         $last = array_shift($debug);
         $last = array_intersect_key($last, array('function' => '', 'class' => '', 'line' => ''));
 
-        $message = 'Object of type ' . get_class(
-                $arg
-            ) . ' passed to darken function. Expecting `' . $type . '`. ' . $arg->toCSS() . '. ' . print_r($last, true);
+        $message = 'Object of type ' .
+            get_class($arg) . ' passed to darken function. Expecting `' . $type . '`. ' .
+            $arg->toCSS() . '. ' . print_r($last, true);
+
         throw new Less_Exception_Compiler($message);
 
     }
