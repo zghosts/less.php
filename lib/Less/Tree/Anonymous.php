@@ -66,6 +66,9 @@ class Less_Tree_Anonymous extends Less_Tree
         $output->add($this->value, $this->currentFileInfo, $this->index, $this->mapLines);
     }
 
+    /**
+     * @return mixed|string
+     */
     public function toCSS()
     {
         return $this->value;

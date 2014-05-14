@@ -28,6 +28,13 @@ class Less_Tree_Import extends Less_Tree
     public $root;
     public $type = 'Import';
 
+    /**
+     * @param      $path
+     * @param      $features
+     * @param      $options
+     * @param      $index
+     * @param null $currentFileInfo
+     */
     public function __construct($path, $features, $options, $index, $currentFileInfo = null)
     {
         $this->options         = $options;
@@ -92,6 +99,9 @@ class Less_Tree_Import extends Less_Tree
         }
     }
 
+    /**
+     * @return string
+     */
     public function toCSS()
     {
         $features = $this->features ? ' ' . $this->features->toCSS() : '';
@@ -123,6 +133,11 @@ class Less_Tree_Import extends Less_Tree
         return preg_replace('/[\?#][^\?]*$/', '', $path);
     }
 
+    /**
+     * @param Less_Environment $env
+     *
+     * @return Less_Tree_Import
+     */
     public function compileForImport($env)
     {
         return new Less_Tree_Import($this->path->compile(
@@ -130,6 +145,11 @@ class Less_Tree_Import extends Less_Tree
         ), $this->features, $this->options, $this->index, $this->currentFileInfo);
     }
 
+    /**
+     * @param Less_Environment $env
+     *
+     * @return mixed
+     */
     public function compilePath($env)
     {
         $path     = $this->path->compile($env);
@@ -154,6 +174,11 @@ class Less_Tree_Import extends Less_Tree
         return $path;
     }
 
+    /**
+     * @param Less_Environment $env
+     *
+     * @return array|Less_Tree_Import|Less_Tree_Media
+     */
     public function compile($env)
     {
 

@@ -11,6 +11,9 @@ class Less_Tree
 
     public $cache_string;
 
+    /**
+     * @return string
+     */
     public function toCSS()
     {
         $output = new Less_Output();

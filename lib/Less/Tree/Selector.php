@@ -58,6 +58,9 @@ class Less_Tree_Selector extends Less_Tree
         $this->CacheElements();
     }
 
+    /**
+     * @param Less_Visitor $visitor
+     */
     public function accept($visitor)
     {
         $this->elements   = $visitor->visitArray($this->elements);
@@ -71,6 +74,13 @@ class Less_Tree_Selector extends Less_Tree
         }
     }
 
+    /**
+     * @param      $elements
+     * @param null $extendList
+     * @param null $evaldCondition
+     *
+     * @return Less_Tree_Selector
+     */
     public function createDerived($elements, $extendList = null, $evaldCondition = null)
     {
         $newSelector                 = new Less_Tree_Selector($elements, ($extendList ? $extendList : $this->extendList), null, $this->index, $this->currentFileInfo, $this->isReferenced);
@@ -78,7 +88,11 @@ class Less_Tree_Selector extends Less_Tree
         return $newSelector;
     }
 
-
+    /**
+     * @param $other
+     *
+     * @return int
+     */
     public function match($other)
     {
 
@@ -128,6 +142,9 @@ class Less_Tree_Selector extends Less_Tree
         }
     }
 
+    /**
+     * @return bool
+     */
     public function isJustParentSelector()
     {
         return !$this->mediaEmpty &&
@@ -136,6 +153,11 @@ class Less_Tree_Selector extends Less_Tree
         ($this->elements[0]->combinator === ' ' || $this->elements[0]->combinator === '');
     }
 
+    /**
+     * @param Less_Environment $env
+     *
+     * @return Less_Tree_Selector
+     */
     public function compile($env)
     {
 
@@ -160,6 +182,9 @@ class Less_Tree_Selector extends Less_Tree
 
     /**
      * @see Less_Tree::genCSS
+     *
+     * @param Less_Output $output
+     * @param bool        $firstSelector
      */
     public function genCSS($output, $firstSelector = true)
     {
@@ -178,11 +203,17 @@ class Less_Tree_Selector extends Less_Tree
         $this->isReferenced = true;
     }
 
+    /**
+     * @return bool
+     */
     public function getIsReferenced()
     {
         return !isset($this->currentFileInfo['reference']) || !$this->currentFileInfo['reference'] || $this->isReferenced;
     }
 
+    /**
+     * @return bool
+     */
     public function getIsOutput()
     {
         return $this->evaldCondition;

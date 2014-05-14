@@ -20,6 +20,9 @@ class Less_Tree_Keyword extends Less_Tree
         $this->value = $value;
     }
 
+    /**
+     * @return $this
+     */
     public function compile()
     {
         return $this;
@@ -38,6 +41,11 @@ class Less_Tree_Keyword extends Less_Tree
         $output->add($this->value);
     }
 
+    /**
+     * @param $other
+     *
+     * @return int
+     */
     public function compare($other)
     {
         if ($other instanceof Less_Tree_Keyword) {

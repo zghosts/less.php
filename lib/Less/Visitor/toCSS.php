@@ -11,6 +11,9 @@ class Less_Visitor_toCSS extends Less_VisitorReplacing
 
     private $charset;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         parent::__construct();
@@ -26,6 +29,11 @@ class Less_Visitor_toCSS extends Less_VisitorReplacing
         return $this->visitObj($root);
     }
 
+    /**
+     * @param Less_Tree_RulesetCall $ruleNode
+     *
+     * @return array
+     */
     public function visitRule($ruleNode)
     {
         if ($ruleNode->variable) {
@@ -34,6 +42,11 @@ class Less_Visitor_toCSS extends Less_VisitorReplacing
         return $ruleNode;
     }
 
+    /**
+     * @param Less_Tree_Mixin_Definition $mixinNode
+     *
+     * @return array
+     */
     public function visitMixinDefinition($mixinNode)
     {
         // mixin definitions do not get eval'd - this means they keep state
@@ -42,11 +55,19 @@ class Less_Visitor_toCSS extends Less_VisitorReplacing
         return array();
     }
 
+    /**
+     * @return array
+     */
     public function visitExtend()
     {
         return array();
     }
 
+    /**
+     * @param Less_Tree_Comment $commentNode
+     *
+     * @return array
+     */
     public function visitComment($commentNode)
     {
         if ($commentNode->isSilent()) {
@@ -55,6 +76,12 @@ class Less_Visitor_toCSS extends Less_VisitorReplacing
         return $commentNode;
     }
 
+    /**
+     * @param Less_Tree_Media $mediaNode
+     * @param $visitDeeper
+     *
+     * @return array
+     */
     public function visitMedia($mediaNode, &$visitDeeper)
     {
         $mediaNode->accept($this);
@@ -66,6 +93,11 @@ class Less_Visitor_toCSS extends Less_VisitorReplacing
         return $mediaNode;
     }
 
+    /**
+     * @param Less_Tree_Directive $directiveNode
+     *
+     * @return array
+     */
     public function visitDirective($directiveNode)
     {
         if (isset($directiveNode->currentFileInfo['reference']) &&
@@ -94,6 +126,11 @@ class Less_Visitor_toCSS extends Less_VisitorReplacing
         return $directiveNode;
     }
 
+    /**
+     * @param Less_Tree_Ruleset $rulesetNode
+     *
+     * @throws Less_Exception_Compiler
+     */
     public function checkPropertiesInRoot($rulesetNode)
     {
 
@@ -109,7 +146,12 @@ class Less_Visitor_toCSS extends Less_VisitorReplacing
         }
     }
 
-
+    /**
+     * @param Less_Tree_Ruleset $rulesetNode
+     * @param $visitDeeper
+     *
+     * @return array
+     */
     public function visitRuleset($rulesetNode, &$visitDeeper)
     {
 
@@ -173,7 +215,9 @@ class Less_Visitor_toCSS extends Less_VisitorReplacing
     /**
      * Helper function for visitiRuleset
      *
-     * return array|Less_Tree_Ruleset
+     * @param Less_Tree_Ruleset $rulesetNode
+     *
+     * @return array|Less_Tree_Ruleset
      */
     private function visitRulesetRoot($rulesetNode)
     {
@@ -188,7 +232,7 @@ class Less_Visitor_toCSS extends Less_VisitorReplacing
     /**
      * Helper function for visitRuleset()
      *
-     * @param $rulesetNode
+     * @param Less_Tree_Ruleset $rulesetNode
      *
      * @return array
      */
@@ -212,6 +256,9 @@ class Less_Visitor_toCSS extends Less_VisitorReplacing
         return $paths;
     }
 
+    /**
+     * @param mixed $rules
+     */
     protected function _removeDuplicateRules(&$rules)
     {
         // remove duplicates
@@ -240,6 +287,9 @@ class Less_Visitor_toCSS extends Less_VisitorReplacing
         }
     }
 
+    /**
+     * @param $rules
+     */
     protected function _mergeRules(&$rules)
     {
         $groups = array();
@@ -293,6 +343,11 @@ class Less_Visitor_toCSS extends Less_VisitorReplacing
 
     }
 
+    /**
+     * @param $values
+     *
+     * @return Less_Tree_Expression
+     */
     public static function toExpression($values)
     {
         $mapped = array();
@@ -302,6 +357,11 @@ class Less_Visitor_toCSS extends Less_VisitorReplacing
         return new Less_Tree_Expression($mapped);
     }
 
+    /**
+     * @param $values
+     *
+     * @return Less_Tree_Value
+     */
     public static function toValue($values)
     {
         //return new Less_Tree_Value($values); ??

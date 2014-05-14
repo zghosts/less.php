@@ -620,7 +620,11 @@ class Less_Parser
         $this->saveStack = array();
     }
 
-
+    /**
+     * @param string $file_path
+     *
+     * @return string
+     */
     public function CacheFile($file_path)
     {
 
@@ -640,8 +644,10 @@ class Less_Parser
         }
     }
 
-
-    static function AddParsedFile($file)
+    /**
+     * @param string $file
+     */
+    public static function AddParsedFile($file)
     {
         self::$imports[] = $file;
     }
@@ -679,7 +685,11 @@ class Less_Parser
         array_pop($this->saveStack);
     }
 
-
+    /**
+     * @param int $offset
+     *
+     * @return int
+     */
     private function isWhitespace($offset = 0)
     {
         return preg_match('/\s/', $this->input[$this->pos + $offset]);
@@ -746,7 +756,13 @@ class Less_Parser
 
     }
 
-    // Match a single character in the input,
+    /**
+     * Match a single character in the input,
+     *
+     * @param $tok
+     *
+     * @return mixed
+     */
     private function MatchChar($tok)
     {
         if (($this->pos < $this->input_len) && ($this->input[$this->pos] === $tok)) {
@@ -755,7 +771,13 @@ class Less_Parser
         }
     }
 
-    // Match a regexp from the current start point
+    /**
+     * Match a regexp from the current start point
+     *
+     * @param $tok
+     *
+     * @return mixed
+     */
     private function MatchReg($tok)
     {
 
@@ -829,7 +851,7 @@ class Less_Parser
      * @param string $tok
      * @param null   $msg
      *
-     * @return
+     * @return mixed
      */
     public function expectChar($tok, $msg = null)
     {
@@ -841,51 +863,51 @@ class Less_Parser
         }
     }
 
-    //
-    // Here in, the parsing rules/functions
-    //
-    // The basic structure of the syntax tree generated is as follows:
-    //
-    //   Ruleset ->  Rule -> Value -> Expression -> Entity
-    //
-    // Here's some LESS code:
-    //
-    //	.class {
-    //	  color: #fff;
-    //	  border: 1px solid #000;
-    //	  width: @w + 4px;
-    //	  > .child {...}
-    //	}
-    //
-    // And here's what the parse tree might look like:
-    //
-    //	 Ruleset (Selector '.class', [
-    //		 Rule ("color",  Value ([Expression [Color #fff]]))
-    //		 Rule ("border", Value ([Expression [Dimension 1px][Keyword "solid"][Color #000]]))
-    //		 Rule ("width",  Value ([Expression [Operation "+" [Variable "@w"][Dimension 4px]]]))
-    //		 Ruleset (Selector [Element '>', '.child'], [...])
-    //	 ])
-    //
-    //  In general, most rules will try to parse a token with the `$()` function, and if the return
-    //  value is truly, will return a new node, of the relevant type. Sometimes, we need to check
-    //  first, before parsing, that's when we use `peek()`.
-    //
-
-    //
-    // The `primary` rule is the *entry* and *exit* point of the parser.
-    // The rules here can appear at any level of the parse tree.
-    //
-    // The recursive nature of the grammar is an interplay between the `block`
-    // rule, which represents `{ ... }`, the `ruleset` rule, and this `primary` rule,
-    // as represented by this simplified grammar:
-    //
-    //	 primary  →  (ruleset | rule)+
-    //	 ruleset  →  selector+ block
-    //	 block	→  '{' primary '}'
-    //
-    // Only at one point is the primary rule not called from the
-    // block rule: at the root level.
-    //
+    /**
+     * Here in, the parsing rules/functions
+     *
+     * The basic structure of the syntax tree generated is as follows:
+     *
+     *   Ruleset ->  Rule -> Value -> Expression -> Entity
+     *
+     * Here's some LESS code:
+     *
+     * .class {
+     *     color: #fff;
+     *     border: 1px solid #000;
+     *     width: @w + 4px;
+     *     > .child {...}
+     * }
+     *
+     * And here's what the parse tree might look like:
+     *
+     * Ruleset (Selector '.class', [
+     *    Rule ("color",  Value ([Expression [Color #fff]]))
+     *    Rule ("border", Value ([Expression [Dimension 1px][Keyword "solid"][Color #000]]))
+     *    Rule ("width",  Value ([Expression [Operation "+" [Variable "@w"][Dimension 4px]]]))
+     *    Ruleset (Selector [Element '>', '.child'], [...])
+     * ])
+     *
+     *  In general, most rules will try to parse a token with the `$()` function, and if the return
+     *  value is truly, will return a new node, of the relevant type. Sometimes, we need to check
+     *  first, before parsing, that's when we use `peek()`.
+     *
+     *
+     *
+     * The `primary` rule is the *entry* and *exit* point of the parser.
+     * The rules here can appear at any level of the parse tree.
+     *
+     * The recursive nature of the grammar is an interplay between the `block`
+     * rule, which represents `{ ... }`, the `ruleset` rule, and this `primary` rule,
+     * as represented by this simplified grammar:
+     *
+     *  primary  →  (ruleset | rule)+
+     *  ruleset  →  selector+ block
+     *  block    →  '{' primary '}'
+     *
+     * Only at one point is the primary rule not called from the
+     * block rule: at the root level.
+     */
     private function parsePrimary()
     {
         $root = array();
@@ -930,11 +952,13 @@ class Less_Parser
         return $root;
     }
 
-
-
-    // We create a Comment node for CSS comments `/* */`,
-    // but keep the LeSS comments `//` silent, by just skipping
-    // over them.
+    /**
+     * We create a Comment node for CSS comments `/* {@*}`,
+     * but keep the LeSS comments `//` silent, by just skipping
+     * over them.
+     *
+     * @return mixed
+     */
     private function parseComment()
     {
 
@@ -957,6 +981,9 @@ class Less_Parser
         }
     }
 
+    /**
+     * @return array
+     */
     private function parseComments()
     {
         $comments = array();
@@ -973,13 +1000,13 @@ class Less_Parser
         return $comments;
     }
 
-
-
-    //
-    // A string, which supports escaping " and '
-    //
-    //	 "milky way" 'he\'s the one!'
-    //
+    /**
+     * A string, which supports escaping " and '
+     *
+     * "milky way" 'he\'s the one!'
+     *
+     * @return mixed
+     */
     private function parseEntitiesQuoted()
     {
         $j     = $this->pos;
@@ -1012,12 +1039,13 @@ class Less_Parser
         return;
     }
 
-
-    //
-    // A catch-all word, such as:
-    //
-    //	 black border-collapse
-    //
+    /**
+     * A catch-all word, such as:
+     *
+     * black border-collapse
+     *
+     * @return mixed
+     */
     private function parseEntitiesKeyword()
     {
 
@@ -1033,7 +1061,13 @@ class Less_Parser
         }
     }
 
-    // duplicate of Less_Tree_Color::FromKeyword
+    /**
+     * duplicate of Less_Tree_Color::FromKeyword
+     *
+     * @param $keyword
+     *
+     * @return mixed
+     */
     private function FromKeyword($keyword)
     {
         $keyword = strtolower($keyword);
@@ -1048,16 +1082,18 @@ class Less_Parser
         }
     }
 
-    //
-    // A function call
-    //
-    //	 rgb(255, 0, 255)
-    //
-    // We also try to catch IE's `alpha()`, but let the `alpha` parser
-    // deal with the details.
-    //
-    // The arguments are parsed with the `entities.arguments` parser.
-    //
+    /**
+     * A function call
+     *
+     * rgb(255, 0, 255)
+     *
+     * We also try to catch IE's `alpha()`, but let the `alpha` parser
+     * deal with the details.
+     *
+     * The arguments are parsed with the `entities.arguments` parser.
+     *
+     * @return mixed|null
+     */
     private function parseEntitiesCall()
     {
         $index = $this->pos;
@@ -1117,6 +1153,9 @@ class Less_Parser
         return $args;
     }
 
+    /**
+     * @return string
+     */
     private function parseEntitiesLiteral()
     {
         return $this->MatchFuncs(
@@ -1124,11 +1163,15 @@ class Less_Parser
         );
     }
 
-    // Assignments are argument entities for calls.
-    // They are present in ie filter properties as shown below.
     //
-    //	 filter: progid:DXImageTransform.Microsoft.Alpha( *opacity=50* )
-    //
+    /**
+     * Assignments are argument entities for calls.
+     * They are present in ie filter properties as shown below.
+     *
+     * filter: progid:DXImageTransform.Microsoft.Alpha( *opacity=50* )
+     *
+     * @return mixed
+     */
     private function parseEntitiesAssignment()
     {
 
@@ -1147,17 +1190,17 @@ class Less_Parser
         }
     }
 
-    //
-    // Parse url() tokens
-    //
-    // We use a specific rule for urls, because they don't really behave like
-    // standard function calls. The difference is that the argument doesn't have
-    // to be enclosed within a string, so it can't be parsed as an Expression.
-    //
+    /**
+     * Parse url() tokens
+     *
+     * We use a specific rule for urls, because they don't really behave like
+     * standard function calls. The difference is that the argument doesn't have
+     * to be enclosed within a string, so it can't be parsed as an Expression.
+     *
+     * @return mixed
+     */
     private function parseEntitiesUrl()
     {
-
-
         if ($this->input[$this->pos] !== 'u' || !$this->matchReg('/\\Gurl\(/')) {
             return;
         }
@@ -1188,15 +1231,16 @@ class Less_Parser
         );
     }
 
-
-    //
-    // A Variable entity, such as `@fink`, in
-    //
-    //	 width: @fink + 2px
-    //
-    // We use a different parser for variable definitions,
-    // see `parsers.variable`.
-    //
+    /**
+     * A Variable entity, such as `@fink`, in
+     *
+     * width: @fink + 2px
+     *
+     * We use a different parser for variable definitions,
+     * see `parsers.variable`.
+     *
+     * @return mixed
+     */
     private function parseEntitiesVariable()
     {
         $index = $this->pos;
@@ -1205,8 +1249,11 @@ class Less_Parser
         }
     }
 
-
-    // A variable entity useing the protective {} e.g. @{var}
+    /**
+     * A variable entity useing the protective {} e.g. @{var}
+     *
+     * @return mixed
+     */
     private function parseEntitiesVariableCurly()
     {
         $index = $this->pos;
@@ -1219,13 +1266,15 @@ class Less_Parser
         }
     }
 
-    //
-    // A Hexadecimal color
-    //
-    //	 #4F3C2F
-    //
-    // `rgb` and `hsl` colors are parsed through the `entities.call` parser.
-    //
+    /**
+     * A Hexadecimal color
+     *
+     * #4F3C2F
+     *
+     * `rgb` and `hsl` colors are parsed through the `entities.call` parser.
+     *
+     * @return mixed
+     */
     private function parseEntitiesColor()
     {
         if ($this->PeekChar('#') && ($rgb = $this->MatchReg('/\\G#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})/'))) {
@@ -1233,11 +1282,13 @@ class Less_Parser
         }
     }
 
-    //
-    // A Dimension, that is, a number and a unit
-    //
-    //	 0.5em 95%
-    //
+    /**
+     * A Dimension, that is, a number and a unit
+     *
+     * 0.5em 95%
+     *
+     * @return mixed
+     */
     private function parseEntitiesDimension()
     {
 
@@ -1258,12 +1309,13 @@ class Less_Parser
         }
     }
 
-
-    //
-    // A unicode descriptor, as is used in unicode-range
-    //
-    // U+0?? or U+00A1-00A9
-    //
+    /**
+     * A unicode descriptor, as is used in unicode-range
+     *
+     * U+0?? or U+00A1-00A9
+     *
+     * @return mixed
+     */
     protected function parseUnicodeDescriptor()
     {
         $ud = $this->MatchReg('/\\G(U\+[0-9a-fA-F?]+)(\-[0-9a-fA-F?]+)?/');
@@ -1272,12 +1324,13 @@ class Less_Parser
         }
     }
 
-
-    //
-    // JavaScript code to be evaluated
-    //
-    //	 `window.location.href`
-    //
+    /**
+     * JavaScript code to be evaluated
+     *
+     * `window.location.href`
+     *
+     * @return mixed
+     */
     private function parseEntitiesJavascript()
     {
         $e = false;
@@ -1298,12 +1351,13 @@ class Less_Parser
         }
     }
 
-
-    //
-    // The variable part of a variable definition. Used in the `rule` parser
-    //
-    //	 @fink:
-    //
+    /**
+     * The variable part of a variable definition. Used in the `rule` parser
+     *
+     * @fink:
+     *
+     * @return mixed
+     */
     private function parseVariable()
     {
         if ($this->PeekChar('@') && ($name = $this->MatchReg('/\\G(@[\w-]+)\s*:/'))) {
@@ -1311,12 +1365,13 @@ class Less_Parser
         }
     }
 
-
-    //
-    // The variable part of a variable definition. Used in the `rule` parser
-    //
-    // @fink();
-    //
+    /**
+     * The variable part of a variable definition. Used in the `rule` parser
+     *
+     * @fink();
+     *
+     * @return mixed
+     */
     private function parseRulesetCall()
     {
 
@@ -1325,10 +1380,13 @@ class Less_Parser
         }
     }
 
-
-    //
-    // extend syntax - used to extend selectors
-    //
+    /**
+     * extend syntax - used to extend selectors
+     *
+     * @param bool $isRule
+     *
+     * @return array
+     */
     protected function parseExtend($isRule = false)
     {
 
@@ -1376,17 +1434,17 @@ class Less_Parser
     }
 
 
-    //
-    // A Mixin call, with an optional argument list
-    //
-    //	 #mixins > .square(#fff);
-    //	 .rounded(4px, black);
-    //	 .button;
-    //
-    // The `while` loop is there because mixins can be
-    // namespaced, but we only support the child and descendant
-    // selector for now.
-    //
+    /**
+     * A Mixin call, with an optional argument list
+     *
+     * #mixins > .square(#fff);
+     * .rounded(4px, black);
+     * .button;
+     *
+     * The `while` loop is there because mixins can be
+     * namespaced, but we only support the child and descendant
+     * selector for now.
+     */
     private function parseMixinCall()
     {
 
@@ -1424,7 +1482,9 @@ class Less_Parser
         $this->restore();
     }
 
-
+    /**
+     * @return array
+     */
     private function parseMixinCallElements()
     {
         $elements = array();
@@ -1445,7 +1505,6 @@ class Less_Parser
 
         return $elements;
     }
-
 
     /**
      * @param boolean $isCall
@@ -1594,25 +1653,25 @@ class Less_Parser
 
 
 
-    //
-    // A Mixin definition, with a list of parameters
-    //
-    //	 .rounded (@radius: 2px, @color) {
-    //		...
-    //	 }
-    //
-    // Until we have a finer grained state-machine, we have to
-    // do a look-ahead, to make sure we don't have a mixin call.
-    // See the `rule` function for more information.
-    //
-    // We start by matching `.rounded (`, and then proceed on to
-    // the argument list, which has optional default values.
-    // We store the parameters in `params`, with a `value` key,
-    // if there is a value, such as in the case of `@radius`.
-    //
-    // Once we've got our params list, and a closing `)`, we parse
-    // the `{...}` block.
-    //
+    /**
+     * A Mixin definition, with a list of parameters
+     *
+     * .rounded (@radius: 2px, @color) {
+     *      ...
+     * }
+     *
+     * Until we have a finer grained state-machine, we have to
+     * do a look-ahead, to make sure we don't have a mixin call.
+     * See the `rule` function for more information.
+     *
+     * We start by matching `.rounded (`, and then proceed on to
+     * the argument list, which has optional default values.
+     * We store the parameters in `params`, with a `value` key,
+     * if there is a value, such as in the case of `@radius`.
+     *
+     * Once we've got our params list, and a closing `)`, we parse
+     * the `{...}` block.
+     */
     private function parseMixinDefinition()
     {
         $cond = null;
@@ -1664,10 +1723,12 @@ class Less_Parser
         }
     }
 
-    //
-    // Entities are the smallest recognized token,
-    // and can be found inside a rule's value.
-    //
+    /**
+     * Entities are the smallest recognized token,
+     * and can be found inside a rule's value.
+     *
+     * @return string
+     */
     private function parseEntity()
     {
 
@@ -1684,21 +1745,25 @@ class Less_Parser
         );
     }
 
-    //
-    // A Rule terminator. Note that we use `peek()` to check for '}',
-    // because the `block` rule will be expecting it, but we still need to make sure
-    // it's there, if ';' was ommitted.
-    //
+    /**
+     * A Rule terminator. Note that we use `peek()` to check for '}',
+     * because the `block` rule will be expecting it, but we still need to make sure
+     * it's there, if ';' was ommitted.
+     *
+     * @return bool
+     */
     private function parseEnd()
     {
         return $this->MatchChar(';') || $this->PeekChar('}');
     }
 
-    //
-    // IE's alpha function
-    //
-    //	 alpha(opacity=88)
-    //
+    /**
+     * IE's alpha function
+     *
+     * alpha(opacity=88)
+     *
+     * @return mixed
+     */
     private function parseAlpha()
     {
 
@@ -1720,19 +1785,20 @@ class Less_Parser
         return $this->NewObj1('Less_Tree_Alpha', $value);
     }
 
-
-    //
-    // A Selector Element
-    //
-    //	 div
-    //	 + h1
-    //	 #socks
-    //	 input[type="text"]
-    //
-    // Elements are the building blocks for Selectors,
-    // they are made out of a `Combinator` (see combinator rule),
-    // and an element name, such as a tag a class, or `*`.
-    //
+    /**
+     * A Selector Element
+     *
+     * div
+     * + h1
+     * #socks
+     * input[type="text"]
+     *
+     * Elements are the building blocks for Selectors,
+     * they are made out of a `Combinator` (see combinator rule),
+     * and an element name, such as a tag a class, or `*`.
+     *
+     * @return mixed
+     */
     private function parseElement()
     {
         $c     = $this->parseCombinator();
@@ -1770,14 +1836,16 @@ class Less_Parser
         }
     }
 
-    //
-    // Combinators combine elements together, in a Selector.
-    //
-    // Because our parser isn't white-space sensitive, special care
-    // has to be taken, when parsing the descendant combinator, ` `,
-    // as it's an empty space. We have to check the previous character
-    // in the input, to see if it's a ` ` character.
-    //
+    /**
+     * Combinators combine elements together, in a Selector.
+     *
+     * Because our parser isn't white-space sensitive, special care
+     * has to be taken, when parsing the descendant combinator, ` `,
+     * as it's an empty space. We have to check the previous character
+     * in the input, to see if it's a ` ` character.
+     *
+     * @return string
+     */
     private function parseCombinator()
     {
         if ($this->pos < $this->input_len) {
@@ -1801,23 +1869,27 @@ class Less_Parser
         }
     }
 
-    //
-    // A CSS selector (see selector below)
-    // with less extensions e.g. the ability to extend and guard
-    //
+    /**
+     * A CSS selector (see selector below)
+     * with less extensions e.g. the ability to extend and guard
+     *
+     * @return mixed
+     */
     private function parseLessSelector()
     {
         return $this->parseSelector(true);
     }
 
-    //
-    // A CSS Selector
-    //
-    //	 .class > div + h1
-    //	 li a:hover
-    //
-    // Selectors are made out of one or more Elements, see above.
-    //
+    /**
+     * A CSS Selector
+     *
+     * .class > div + h1
+     * li a:hover
+     *
+     * @param bool $isLess
+     *
+     * @return mixed
+     */
     private function parseSelector($isLess = false)
     {
         $elements   = array();
@@ -1866,11 +1938,17 @@ class Less_Parser
         }
     }
 
+    /**
+     * @return mixed
+     */
     private function parseTag()
     {
         return ($tag = $this->MatchReg('/\\G[A-Za-z][A-Za-z-]*[0-9]?/')) ? $tag : $this->MatchChar('*');
     }
 
+    /**
+     * @return mixed
+     */
     private function parseAttribute()
     {
 
@@ -1897,10 +1975,12 @@ class Less_Parser
         return $this->NewObj3('Less_Tree_Attribute', array($key, $op[0], $val));
     }
 
-    //
-    // The `block` rule is used by `ruleset` and `mixin.definition`.
-    // It's a wrapper around the `primary` rule, with added `{}`.
-    //
+    /**
+     * The `block` rule is used by `ruleset` and `mixin.definition`.
+     * It's a wrapper around the `primary` rule, with added `{}`.
+     *
+     * @return array
+     */
     private function parseBlock()
     {
         if ($this->MatchChar('{')) {
@@ -1911,6 +1991,9 @@ class Less_Parser
         }
     }
 
+    /**
+     * @return array|mixed
+     */
     private function parseBlockRuleset()
     {
         $block = $this->parseBlock();
@@ -1922,6 +2005,9 @@ class Less_Parser
         return $block;
     }
 
+    /**
+     * @return mixed
+     */
     private function parseDetachedRuleset()
     {
         $blockRuleset = $this->parseBlockRuleset();
@@ -1930,9 +2016,11 @@ class Less_Parser
         }
     }
 
-    //
-    // div, .class, body > p {...}
-    //
+    /**
+     * div, .class, body > p {...}
+     *
+     * @return mixed
+     */
     private function parseRuleset()
     {
         $selectors = array();
@@ -2012,7 +2100,11 @@ class Less_Parser
         $this->restore();
     }
 
-
+    /**
+     * @param null $tryAnonymous
+     *
+     * @return mixed
+     */
     private function parseRule($tryAnonymous = null)
     {
 
@@ -2080,6 +2172,9 @@ class Less_Parser
         }
     }
 
+    /**
+     * @return mixed
+     */
     public function parseAnonymousValue()
     {
 
@@ -2089,16 +2184,18 @@ class Less_Parser
         }
     }
 
-    //
-    // An @import directive
-    //
-    //	 @import "lib";
-    //
-    // Depending on our environment, importing is done differently:
-    // In the browser, it's an XHR request, in Node, it would be a
-    // file-system operation. The function used for importing is
-    // stored in `import`, which we pass to the Import constructor.
-    //
+    /**
+     * An @import directive
+     *
+     * \@import "lib";
+     *
+     * Depending on our environment, importing is done differently:
+     * In the browser, it's an XHR request, in Node, it would be a
+     * file-system operation. The function used for importing is
+     * stored in `import`, which we pass to the Import constructor.
+     *
+     * @return mixed
+     */
     private function parseImport()
     {
 
@@ -2129,6 +2226,9 @@ class Less_Parser
         $this->restore();
     }
 
+    /**
+     * @return array
+     */
     private function parseImportOptions()
     {
 
@@ -2162,6 +2262,9 @@ class Less_Parser
         return $options;
     }
 
+    /**
+     * @return mixed
+     */
     private function parseImportOption()
     {
         $opt = $this->MatchReg('/\\G(less|css|multiple|once|inline|reference)/');
@@ -2170,6 +2273,9 @@ class Less_Parser
         }
     }
 
+    /**
+     * @return mixed|null
+     */
     private function parseMediaFeature()
     {
         $nodes = array();
@@ -2204,6 +2310,9 @@ class Less_Parser
         }
     }
 
+    /**
+     * @return array|null
+     */
     private function parseMediaFeatures()
     {
         $features = array();
@@ -2229,6 +2338,9 @@ class Less_Parser
         return $features ? $features : null;
     }
 
+    /**
+     * @return mixed
+     */
     private function parseMedia()
     {
         if ($this->MatchReg('/\\G@media/')) {
@@ -2244,12 +2356,13 @@ class Less_Parser
         }
     }
 
-
-    //
-    // A CSS Directive
-    //
-    // @charset "utf-8";
-    //
+    /**
+     * A CSS Directive
+     *
+     * @charset "utf-8";
+     *
+     * @return Less_Tree_Expression|mixed|null|string
+     */
     private function parseDirective()
     {
 
@@ -2366,15 +2479,16 @@ class Less_Parser
         $this->restore();
     }
 
-
-    //
-    // A Value is a comma-delimited list of Expressions
-    //
-    //	 font-family: Baskerville, Georgia, serif;
-    //
-    // In a Rule, a Value represents everything after the `:`,
-    // and before the `;`.
-    //
+    /**
+     * A Value is a comma-delimited list of Expressions
+     *
+     * font-family: Baskerville, Georgia, serif;
+     *
+     * In a Rule, a Value represents everything after the `:`,
+     * and before the `;`.
+     *
+     * @return mixed
+     */
     private function parseValue()
     {
         $expressions = array();
@@ -2394,6 +2508,9 @@ class Less_Parser
         }
     }
 
+    /**
+     * @return string
+     */
     private function parseImportant()
     {
         if ($this->PeekChar('!') && $this->MatchReg('/\\G! *important/')) {
@@ -2401,6 +2518,9 @@ class Less_Parser
         }
     }
 
+    /**
+     * @return mixed
+     */
     private function parseSub()
     {
 
@@ -2525,6 +2645,9 @@ class Less_Parser
         }
     }
 
+    /**
+     * @return mixed|null
+     */
     private function parseCondition()
     {
         $index  = $this->pos;
@@ -2594,7 +2717,6 @@ class Less_Parser
         return $o;
     }
 
-
     /**
      * Expressions either represent mathematical operations,
      * or white-space delimited Entities.
@@ -2627,7 +2749,6 @@ class Less_Parser
             return $this->NewObj1('Less_Tree_Expression', $entities);
         }
     }
-
 
     /**
      * Parse a property
@@ -2692,10 +2813,17 @@ class Less_Parser
             }
             return $name;
         }
-
-
     }
 
+    /**
+     * @param $re
+     * @param $offset
+     * @param $length
+     * @param $index
+     * @param $name
+     *
+     * @return bool
+     */
     private function rulePropertyMatch($re, &$offset, &$length, &$index, &$name)
     {
         preg_match($re, $this->input, $a, 0, $offset);
@@ -2708,6 +2836,11 @@ class Less_Parser
         }
     }
 
+    /**
+     * @param $vars
+     *
+     * @return string
+     */
     public function serializeVars($vars)
     {
         $s = '';
@@ -2875,17 +3008,27 @@ class Less_Parser
         return $obj;
     }
 
-    //caching
+    /**
+     * caching
+     *
+     * @param       $obj
+     * @param       $class
+     * @param array $args
+     */
     public function ObjCache($obj, $class, $args = array())
     {
         $obj->cache_string = ' new ' . $class . '(' . self::ArgCache($args) . ')';
     }
 
+    /**
+     * @param $args
+     *
+     * @return string
+     */
     public function ArgCache($args)
     {
         return implode(',', array_map(array('Less_Parser', 'ArgString'), $args));
     }
-
 
     /**
      * Convert an argument to a string for use in the parser cache
@@ -2915,16 +3058,29 @@ class Less_Parser
         return var_export($arg, true);
     }
 
+    /**
+     * @param $msg
+     *
+     * @throws Less_Exception_Parser
+     */
     public function Error($msg)
     {
         throw new Less_Exception_Parser($msg, null, $this->furthest, $this->env->currentFileInfo);
     }
 
+    /**
+     * @param $path
+     *
+     * @return mixed
+     */
     public static function WinPath($path)
     {
         return str_replace('\\', '/', $path);
     }
 
+    /**
+     * @return bool
+     */
     public function CacheEnabled()
     {
         return (Less_Parser::$options['cache_method'] && (Less_Cache::$cache_dir || (Less_Parser::$options['cache_method'] == 'callback')));

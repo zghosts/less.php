@@ -26,6 +26,9 @@ class Less_Tree_Javascript extends Less_Tree
         $this->index      = $index;
     }
 
+    /**
+     * @return Less_Tree_Anonymous
+     */
     public function compile()
     {
         return new Less_Tree_Anonymous('/* Sorry, can not do JavaScript evaluation in PHP... :( */');

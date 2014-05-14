@@ -19,6 +19,12 @@ class Less_Tree_NameValue extends Less_Tree
     public $currentFileInfo;
     public $type = 'NameValue';
 
+    /**
+     * @param      $name
+     * @param null $value
+     * @param null $index
+     * @param null $currentFileInfo
+     */
     public function __construct($name, $value = null, $index = null, $currentFileInfo = null)
     {
         $this->name            = $name;
@@ -27,6 +33,9 @@ class Less_Tree_NameValue extends Less_Tree
         $this->currentFileInfo = $currentFileInfo;
     }
 
+    /**
+     * @param Less_Output $output
+     */
     public function genCSS($output)
     {
 
@@ -41,6 +50,11 @@ class Less_Tree_NameValue extends Less_Tree
         );
     }
 
+    /**
+     * @param Less_Environment $env
+     *
+     * @return $this
+     */
     public function compile($env)
     {
         return $this;

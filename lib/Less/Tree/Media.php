@@ -16,6 +16,12 @@ class Less_Tree_Media extends Less_Tree
     public $isReferenced;
     public $type = 'Media';
 
+    /**
+     * @param array $value
+     * @param array $features
+     * @param null  $index
+     * @param null  $currentFileInfo
+     */
     public function __construct($value = array(), $features = array(), $index = null, $currentFileInfo = null)
     {
 
@@ -30,6 +36,9 @@ class Less_Tree_Media extends Less_Tree
         $this->rules[0]->allowImports = true;
     }
 
+    /**
+     * @param Less_Visitor $visitor
+     */
     public function accept($visitor)
     {
         $this->features = $visitor->visitObj($this->features);
@@ -48,6 +57,11 @@ class Less_Tree_Media extends Less_Tree
 
     }
 
+    /**
+     * @param Less_Environment $env
+     *
+     * @return Less_Tree_Media|Less_Tree_Ruleset
+     */
     public function compile($env)
     {
 
@@ -77,16 +91,29 @@ class Less_Tree_Media extends Less_Tree
         return !$env->mediaPath ? $media->compileTop($env) : $media->compileNested($env);
     }
 
+    /**
+     * @param string $name
+     *
+     * @return mixed
+     */
     public function variable($name)
     {
         return $this->rules[0]->variable($name);
     }
 
+    /**
+     * @param string $selector
+     *
+     * @return mixed
+     */
     public function find($selector)
     {
         return $this->rules[0]->find($selector, $this);
     }
 
+    /**
+     * @return array
+     */
     public function emptySelectors()
     {
         $el                  = new Less_Tree_Element('', '&', $this->index, $this->currentFileInfo);
@@ -95,6 +122,9 @@ class Less_Tree_Media extends Less_Tree
         return $sels;
     }
 
+    /**
+     * Marks object as referenced
+     */
     public function markReferenced()
     {
         $this->rules[0]->markReferenced();
@@ -103,6 +133,11 @@ class Less_Tree_Media extends Less_Tree
     }
 
     // evaltop
+    /**
+     * @param Less_Environment $env
+     *
+     * @return Less_Tree_Media|Less_Tree_Ruleset
+     */
     public function compileTop($env)
     {
         $result = $this;
@@ -119,6 +154,11 @@ class Less_Tree_Media extends Less_Tree
         return $result;
     }
 
+    /**
+     * @param Less_Environment $env
+     *
+     * @return Less_Tree_Ruleset
+     */
     public function compileNested($env)
     {
         $path = array_merge($env->mediaPath, array($this));
@@ -132,10 +172,10 @@ class Less_Tree_Media extends Less_Tree
         // Trace all permutations to generate the resulting media-query.
         //
         // (a, b and c) with nested (d, e) ->
-        //	a and d
-        //	a and e
-        //	b and c and d
-        //	b and c and e
+        // a and d
+        // a and e
+        // b and c and d
+        // b and c and e
 
         $permuted    = $this->permute($path);
         $expressions = array();
@@ -158,6 +198,11 @@ class Less_Tree_Media extends Less_Tree
         return new Less_Tree_Ruleset(array(), array());
     }
 
+    /**
+     * @param array $arr
+     *
+     * @return array
+     */
     public function permute($arr)
     {
         if (!$arr) {
@@ -182,6 +227,9 @@ class Less_Tree_Media extends Less_Tree
         return $result;
     }
 
+    /**
+     * @param $selectors
+     */
     public function bubbleSelectors($selectors)
     {
 

@@ -47,6 +47,11 @@ class Less_Tree_Quoted extends Less_Tree
         }
     }
 
+    /**
+     * @param Less_Environment $env
+     *
+     * @return Less_Tree_Quoted
+     */
     public function compile($env)
     {
 
@@ -71,6 +76,11 @@ class Less_Tree_Quoted extends Less_Tree
         return new Less_Tree_Quoted($this->quote . $value . $this->quote, $value, $this->escaped, $this->index, $this->currentFileInfo);
     }
 
+    /**
+     * @param $x
+     *
+     * @return int
+     */
     public function compare($x)
     {
 

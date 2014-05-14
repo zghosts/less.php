@@ -32,6 +32,14 @@ class Less_Visitor_processExtends extends Less_Visitor
         return $this->visitObj($root);
     }
 
+    /**
+     * @param     $extendsList
+     * @param     $extendsListTarget
+     * @param int $iterationCount
+     *
+     * @return array
+     * @throws Less_Exception_Parser
+     */
     private function doExtendChaining($extendsList, $extendsListTarget, $iterationCount = 0)
     {
         //
@@ -133,22 +141,36 @@ class Less_Visitor_processExtends extends Less_Visitor
         return array_merge($extendsList, $extendsToAdd);
     }
 
-
+    /**
+     * @param $ruleNode
+     * @param $visitDeeper
+     */
     protected function visitRule($ruleNode, &$visitDeeper)
     {
         $visitDeeper = false;
     }
 
+    /**
+     * @param $mixinDefinitionNode
+     * @param $visitDeeper
+     */
     protected function visitMixinDefinition($mixinDefinitionNode, &$visitDeeper)
     {
         $visitDeeper = false;
     }
 
+    /**
+     * @param $selectorNode
+     * @param $visitDeeper
+     */
     protected function visitSelector($selectorNode, &$visitDeeper)
     {
         $visitDeeper = false;
     }
 
+    /**
+     * @param $rulesetNode
+     */
     protected function visitRuleset($rulesetNode)
     {
 
@@ -181,7 +203,11 @@ class Less_Visitor_processExtends extends Less_Visitor
         }
     }
 
-
+    /**
+     * @param $rulesetNode
+     * @param $extend
+     * @param $selectorPath
+     */
     private function ExtendMatch($rulesetNode, $extend, $selectorPath)
     {
         $matches = $this->findMatch($extend, $selectorPath);
@@ -193,7 +219,12 @@ class Less_Visitor_processExtends extends Less_Visitor
         }
     }
 
-
+    /**
+     * @param $extend
+     * @param $haystackSelectorPath
+     *
+     * @return array|bool
+     */
     private function findMatch($extend, $haystackSelectorPath)
     {
 
@@ -279,8 +310,15 @@ class Less_Visitor_processExtends extends Less_Visitor
     }
 
 
-    // Before going through all the nested loops, lets check to see if a match is possible
-    // Reduces Bootstrap 3.1 compile time from ~6.5s to ~5.6s
+    /**
+     * Before going through all the nested loops, lets check to see if a match is possible
+     * Reduces Bootstrap 3.1 compile time from ~6.5s to ~5.6s
+     *
+     * @param $extend
+     * @param $haystackSelectorPath
+     *
+     * @return bool
+     */
     private function HasMatches($extend, $haystackSelectorPath)
     {
 
@@ -518,7 +556,9 @@ class Less_Visitor_processExtends extends Less_Visitor
         return $path;
     }
 
-
+    /**
+     * @param Less_Tree_Media $mediaNode
+     */
     protected function visitMedia($mediaNode)
     {
         $newAllExtends           = array_merge($mediaNode->allExtends, end($this->allExtendsStack));
@@ -530,6 +570,9 @@ class Less_Visitor_processExtends extends Less_Visitor
         array_pop($this->allExtendsStack);
     }
 
+    /**
+     * @param Less_Tree_Directive $directiveNode
+     */
     protected function visitDirective($directiveNode)
     {
         $newAllExtends           = array_merge($directiveNode->allExtends, end($this->allExtendsStack));

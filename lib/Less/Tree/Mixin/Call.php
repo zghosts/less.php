@@ -1,6 +1,9 @@
 <?php
 
 
+/**
+ * Class Less_Tree_Mixin_Call
+ */
 class Less_Tree_Mixin_Call extends Less_Tree
 {
 
@@ -31,6 +34,13 @@ class Less_Tree_Mixin_Call extends Less_Tree
     //}
 
 
+    /**
+     * @param Less_Environment $env
+     *
+     * @return array
+     * @throws Less_Exception_Compiler
+     * @throws Exception
+     */
     public function compile($env)
     {
 

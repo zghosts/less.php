@@ -44,6 +44,11 @@ class Less_Tree_Ruleset extends Less_Tree
         }
     }
 
+    /**
+     * @param      $selectors
+     * @param      $rules
+     * @param null $strictImports
+     */
     public function __construct($selectors, $rules, $strictImports = null)
     {
         $this->selectors     = $selectors;
@@ -254,6 +259,9 @@ class Less_Tree_Ruleset extends Less_Tree
         return $ruleset;
     }
 
+    /**
+     * @param Less_Environment $env
+     */
     public function evalImports($env)
     {
 
@@ -277,7 +285,10 @@ class Less_Tree_Ruleset extends Less_Tree
         }
     }
 
-    function makeImportant()
+    /**
+     * @return Less_Tree_Ruleset
+     */
+    public function makeImportant()
     {
 
         $important_rules = array();
@@ -292,12 +303,23 @@ class Less_Tree_Ruleset extends Less_Tree
         return new Less_Tree_Ruleset($this->selectors, $important_rules, $this->strictImports);
     }
 
+    /**
+     * @param $args
+     *
+     * @return bool
+     */
     public function matchArgs($args)
     {
         return !$args;
     }
 
-    // lets you call a css selector with a guard
+    /**
+     * lets you call a css selector with a guard
+     * @param $args
+     * @param Less_Environment $env
+     *
+     * @return bool
+     */
     public function matchCondition($args, $env)
     {
         $lastSelector = end($this->selectors);
@@ -311,13 +333,19 @@ class Less_Tree_Ruleset extends Less_Tree
         return true;
     }
 
-    function resetCache()
+    /**
+     * Reset cache
+     */
+    public function resetCache()
     {
         $this->_rulesets  = null;
         $this->_variables = null;
         $this->lookups    = array();
     }
 
+    /**
+     * variables
+     */
     public function variables()
     {
         $this->_variables = array();
@@ -328,6 +356,11 @@ class Less_Tree_Ruleset extends Less_Tree
         }
     }
 
+    /**
+     * @param $name
+     *
+     * @return null
+     */
     public function variable($name)
     {
 
@@ -337,6 +370,12 @@ class Less_Tree_Ruleset extends Less_Tree
         return isset($this->_variables[$name]) ? $this->_variables[$name] : null;
     }
 
+    /**
+     * @param Less_Tree_Selector $selector
+     * @param null $self
+     *
+     * @return mixed
+     */
     public function find($selector, $self = null)
     {
 
@@ -385,6 +424,8 @@ class Less_Tree_Ruleset extends Less_Tree
 
     /**
      * @see Less_Tree::genCSS
+     *
+     * @param Less_Output $output
      */
     public function genCSS($output)
     {
@@ -492,8 +533,10 @@ class Less_Tree_Ruleset extends Less_Tree
 
     }
 
-
-    function markReferenced()
+    /**
+     * Mark referenced
+     */
+    public function markReferenced()
     {
         if (!$this->selectors) {
             return;
@@ -503,6 +546,12 @@ class Less_Tree_Ruleset extends Less_Tree
         }
     }
 
+    /**
+     * @param $context
+     * @param $selectors
+     *
+     * @return array
+     */
     public function joinSelectors($context, $selectors)
     {
         $paths = array();
@@ -514,6 +563,11 @@ class Less_Tree_Ruleset extends Less_Tree
         return $paths;
     }
 
+    /**
+     * @param $paths
+     * @param $context
+     * @param $selector
+     */
     public function joinSelector(&$paths, $context, $selector)
     {
 
@@ -659,7 +713,11 @@ class Less_Tree_Ruleset extends Less_Tree
         }
     }
 
-    function mergeElementsOnToSelectors($elements, &$selectors)
+    /**
+     * @param $elements
+     * @param $selectors
+     */
+    public function mergeElementsOnToSelectors($elements, &$selectors)
     {
 
         if (!$selectors) {

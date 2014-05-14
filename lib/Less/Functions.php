@@ -13,6 +13,10 @@ class Less_Functions
     public $env;
     public $currentFileInfo;
 
+    /**
+     * @param Less_Environment $env
+     * @param null             $currentFileInfo
+     */
     public function __construct($env, $currentFileInfo = null)
     {
         $this->env             = $env;
@@ -92,6 +96,12 @@ class Less_Functions
         }
     }
 
+    /**
+     * @param     $n
+     * @param int $size
+     *
+     * @return float
+     */
     public static function scaled($n, $size = 255)
     {
         if ($n instanceof Less_Tree_Dimension && $n->unit->is('%')) {
@@ -101,11 +111,26 @@ class Less_Functions
         }
     }
 
+    /**
+     * @param $r
+     * @param $g
+     * @param $b
+     *
+     * @return Less_Tree_Color
+     */
     public function rgb($r, $g, $b)
     {
         return $this->rgba($r, $g, $b, 1.0);
     }
 
+    /**
+     * @param $r
+     * @param $g
+     * @param $b
+     * @param $a
+     *
+     * @return Less_Tree_Color
+     */
     public function rgba($r, $g, $b, $a)
     {
         $rgb = array($r, $g, $b);
@@ -115,11 +140,26 @@ class Less_Functions
         return new Less_Tree_Color($rgb, $a);
     }
 
+    /**
+     * @param $h
+     * @param $s
+     * @param $l
+     *
+     * @return Less_Tree_Color
+     */
     public function hsl($h, $s, $l)
     {
         return $this->hsla($h, $s, $l, 1.0);
     }
 
+    /**
+     * @param $h
+     * @param $s
+     * @param $l
+     * @param $a
+     *
+     * @return Less_Tree_Color
+     */
     public function hsla($h, $s, $l, $a)
     {
 
@@ -165,6 +205,13 @@ class Less_Functions
         }
     }
 
+    /**
+     * @param $h
+     * @param $s
+     * @param $v
+     *
+     * @return Less_Tree_Color
+     */
     public function hsv($h, $s, $v)
     {
         return $this->hsva($h, $s, $v, 1.0);
@@ -212,69 +259,128 @@ class Less_Functions
         );
     }
 
+    /**
+     * @param Less_Tree_Color $color
+     *
+     * @return Less_Tree_Dimension
+     */
     public function hue($color)
     {
         $c = $color->toHSL();
         return new Less_Tree_Dimension(Less_Parser::round($c['h']));
     }
 
+    /**
+     * @param Less_Tree_Color $color
+     *
+     * @return Less_Tree_Dimension
+     */
     public function saturation($color)
     {
         $c = $color->toHSL();
         return new Less_Tree_Dimension(Less_Parser::round($c['s'] * 100), '%');
     }
 
+    /**
+     * @param Less_Tree_Color $color
+     *
+     * @return Less_Tree_Dimension
+     */
     public function lightness($color)
     {
         $c = $color->toHSL();
         return new Less_Tree_Dimension(Less_Parser::round($c['l'] * 100), '%');
     }
 
+    /**
+     * @param Less_Tree_Color $color
+     *
+     * @return Less_Tree_Dimension
+     */
     public function hsvhue($color)
     {
         $hsv = $color->toHSV();
         return new Less_Tree_Dimension(Less_Parser::round($hsv['h']));
     }
 
-
+    /**
+     * @param Less_Tree_Color $color
+     *
+     * @return Less_Tree_Dimension
+     */
     public function hsvsaturation($color)
     {
         $hsv = $color->toHSV();
         return new Less_Tree_Dimension(Less_Parser::round($hsv['s'] * 100), '%');
     }
 
+    /**
+     * @param Less_Tree_Color $color
+     *
+     * @return Less_Tree_Dimension
+     */
     public function hsvvalue($color)
     {
         $hsv = $color->toHSV();
         return new Less_Tree_Dimension(Less_Parser::round($hsv['v'] * 100), '%');
     }
 
+    /**
+     * @param Less_Tree_Color $color
+     *
+     * @return Less_Tree_Dimension
+     */
     public function red($color)
     {
         return new Less_Tree_Dimension($color->rgb[0]);
     }
 
+    /**
+     * @param Less_Tree_Color $color
+     *
+     * @return Less_Tree_Dimension
+     */
     public function green($color)
     {
         return new Less_Tree_Dimension($color->rgb[1]);
     }
 
+    /**
+     * @param Less_Tree_Color $color
+     *
+     * @return Less_Tree_Dimension
+     */
     public function blue($color)
     {
         return new Less_Tree_Dimension($color->rgb[2]);
     }
 
+    /**
+     * @param Less_Tree_Color $color
+     *
+     * @return Less_Tree_Dimension
+     */
     public function alpha($color)
     {
         $c = $color->toHSL();
         return new Less_Tree_Dimension($c['a']);
     }
 
+    /**
+     * @param Less_Tree_Color $color
+     *
+     * @return Less_Tree_Dimension
+     */
     public function luma($color)
     {
         return new Less_Tree_Dimension(Less_Parser::round($color->luma() * $color->alpha * 100), '%');
     }
 
+    /**
+     * @param Less_Tree_Color $color
+     *
+     * @return Less_Tree_Dimension
+     */
     public function luminance($color)
     {
         $luminance =
@@ -285,6 +391,12 @@ class Less_Functions
         return new Less_Tree_Dimension(Less_Parser::round($luminance * $color->alpha * 100), '%');
     }
 
+    /**
+     * @param Less_Tree_Color     $color
+     * @param Less_Tree_Dimension $amount
+     *
+     * @return Less_Tree_Color|null
+     */
     public function saturate($color, $amount = null)
     {
         // filter: saturate(3.2);
@@ -301,7 +413,7 @@ class Less_Functions
     }
 
     /**
-     * @param                     $color
+     * @param Less_Tree_Color     $color
      * @param Less_Tree_Dimension $amount
      *
      * @return \Less_Tree_Color
@@ -316,7 +428,12 @@ class Less_Functions
         return $this->hsla($hsl['h'], $hsl['s'], $hsl['l'], $hsl['a']);
     }
 
-
+    /**
+     * @param Less_Tree_Color     $color
+     * @param Less_Tree_Dimension $amount
+     *
+     * @return Less_Tree_Color
+     */
     public function lighten($color, $amount)
     {
         $hsl = $color->toHSL();
@@ -327,6 +444,12 @@ class Less_Functions
         return $this->hsla($hsl['h'], $hsl['s'], $hsl['l'], $hsl['a']);
     }
 
+    /**
+     * @param Less_Tree_Color     $color
+     * @param Less_Tree_Dimension $amount
+     *
+     * @return Less_Tree_Color
+     */
     public function darken($color, $amount)
     {
 
@@ -341,6 +464,12 @@ class Less_Functions
         Less_Functions::Expected('color', $color);
     }
 
+    /**
+     * @param Less_Tree_Color     $color
+     * @param Less_Tree_Dimension $amount
+     *
+     * @return Less_Tree_Color
+     */
     public function fadein($color, $amount)
     {
         $hsl = $color->toHSL();
@@ -349,6 +478,12 @@ class Less_Functions
         return $this->hsla($hsl['h'], $hsl['s'], $hsl['l'], $hsl['a']);
     }
 
+    /**
+     * @param Less_Tree_Color     $color
+     * @param Less_Tree_Dimension $amount
+     *
+     * @return Less_Tree_Color
+     */
     public function fadeout($color, $amount)
     {
         $hsl = $color->toHSL();
@@ -357,6 +492,12 @@ class Less_Functions
         return $this->hsla($hsl['h'], $hsl['s'], $hsl['l'], $hsl['a']);
     }
 
+    /**
+     * @param Less_Tree_Color     $color
+     * @param Less_Tree_Dimension $amount
+     *
+     * @return Less_Tree_Color
+     */
     public function fade($color, $amount)
     {
         $hsl = $color->toHSL();
@@ -366,7 +507,12 @@ class Less_Functions
         return $this->hsla($hsl['h'], $hsl['s'], $hsl['l'], $hsl['a']);
     }
 
-
+    /**
+     * @param Less_Tree_Color     $color
+     * @param Less_Tree_Dimension $amount
+     *
+     * @return Less_Tree_Color
+     */
     public function spin($color, $amount)
     {
         $hsl = $color->toHSL();
@@ -415,12 +561,24 @@ class Less_Functions
         return new Less_Tree_Color($rgb, $alpha);
     }
 
+    /**
+     * @param Less_Tree_Color $color
+     *
+     * @return Less_Tree_Color
+     */
     public function greyscale($color)
     {
         return $this->desaturate($color, new Less_Tree_Dimension(100));
     }
 
-
+    /**
+     * @param Less_Tree_Color $color
+     * @param Less_Tree_Color $dark
+     * @param Less_Tree_Color $light
+     * @param null $threshold
+     *
+     * @return Less_Tree_Color|null
+     */
     public function contrast($color, $dark = null, $light = null, $threshold = null)
     {
         // filter: contrast(3.2);
@@ -453,6 +611,11 @@ class Less_Functions
         }
     }
 
+    /**
+     * @param string|Less_Tree_JavaScript $str
+     *
+     * @return Less_Tree_Anonymous
+     */
     public function e($str)
     {
         if (is_string($str)) {
@@ -461,6 +624,11 @@ class Less_Functions
         return new Less_Tree_Anonymous($str instanceof Less_Tree_JavaScript ? $str->expression : $str->value);
     }
 
+    /**
+     * @param $str
+     *
+     * @return Less_Tree_Anonymous
+     */
     public function escape($str)
     {
 
@@ -484,6 +652,12 @@ class Less_Functions
     /**
      * todo: This function will need some additional work to make it work the same as less.js
      *
+     * @param      $string
+     * @param      $pattern
+     * @param      $replacement
+     * @param null $flags
+     *
+     * @return Less_Tree_Quoted
      */
     public function replace($string, $pattern, $replacement, $flags = null)
     {
@@ -503,6 +677,11 @@ class Less_Functions
         return new Less_Tree_Quoted('', $result);
     }
 
+    /**
+     * @param $flags
+     *
+     * @return string
+     */
     public static function replace_flags($flags)
     {
         $flags     = str_split($flags, 1);
@@ -523,6 +702,9 @@ class Less_Functions
         return $new_flags;
     }
 
+    /**
+     * @return Less_Tree_Quoted
+     */
     public function _percent()
     {
         $string = func_get_arg(0);
@@ -544,6 +726,13 @@ class Less_Functions
         return new Less_Tree_Quoted($string->quote, $result, $string->escaped);
     }
 
+    /**
+     * @param      $val
+     * @param null $unit
+     *
+     * @return Less_Tree_Dimension
+     * @throws Less_Exception_Compiler
+     */
     public function unit($val, $unit = null)
     {
         if (!($val instanceof Less_Tree_Dimension)) {
@@ -562,11 +751,23 @@ class Less_Functions
         return new Less_Tree_Dimension($val->value, $unit);
     }
 
+    /**
+     * @param $val
+     * @param $unit
+     *
+     * @return mixed
+     */
     public function convert($val, $unit)
     {
         return $val->convertTo($unit->value);
     }
 
+    /**
+     * @param      $n
+     * @param bool $f
+     *
+     * @return Less_Tree_Dimension|mixed
+     */
     public function round($n, $f = false)
     {
 
@@ -578,17 +779,32 @@ class Less_Functions
         return $this->_math('Less_Parser::round', null, $n, $fraction);
     }
 
+    /**
+     * @return Less_Tree_Dimension
+     */
     public function pi()
     {
         return new Less_Tree_Dimension(M_PI);
     }
 
+    /**
+     * @param $a
+     * @param $b
+     *
+     * @return Less_Tree_Dimension
+     */
     public function mod($a, $b)
     {
         return new Less_Tree_Dimension($a->value % $b->value, $a->unit);
     }
 
-
+    /**
+     * @param $x
+     * @param $y
+     *
+     * @return Less_Tree_Dimension
+     * @throws Less_Exception_Compiler
+     */
     public function pow($x, $y)
     {
         if (is_numeric($x) && is_numeric($y)) {
@@ -602,56 +818,110 @@ class Less_Functions
     }
 
     // var mathFunctions = [{name:"ce ...
+    /**
+     * @param $n
+     *
+     * @return Less_Tree_Dimension|mixed
+     */
     public function ceil($n)
     {
         return $this->_math('ceil', null, $n);
     }
 
+    /**
+     * @param $n
+     *
+     * @return Less_Tree_Dimension|mixed
+     */
     public function floor($n)
     {
         return $this->_math('floor', null, $n);
     }
 
+    /**
+     * @param $n
+     *
+     * @return Less_Tree_Dimension|mixed
+     */
     public function sqrt($n)
     {
         return $this->_math('sqrt', null, $n);
     }
 
+    /**
+     * @param $n
+     *
+     * @return Less_Tree_Dimension|mixed
+     */
     public function abs($n)
     {
         return $this->_math('abs', null, $n);
     }
 
+    /**
+     * @param $n
+     *
+     * @return Less_Tree_Dimension|mixed
+     */
     public function tan($n)
     {
         return $this->_math('tan', '', $n);
     }
 
+    /**
+     * @param $n
+     *
+     * @return Less_Tree_Dimension|mixed
+     */
     public function sin($n)
     {
         return $this->_math('sin', '', $n);
     }
 
+    /**
+     * @param $n
+     *
+     * @return Less_Tree_Dimension|mixed
+     */
     public function cos($n)
     {
         return $this->_math('cos', '', $n);
     }
 
+    /**
+     * @param $n
+     *
+     * @return Less_Tree_Dimension|mixed
+     */
     public function atan($n)
     {
         return $this->_math('atan', 'rad', $n);
     }
 
+    /**
+     * @param $n
+     *
+     * @return Less_Tree_Dimension|mixed
+     */
     public function asin($n)
     {
         return $this->_math('asin', 'rad', $n);
     }
 
+    /**
+     * @param $n
+     *
+     * @return Less_Tree_Dimension|mixed
+     */
     public function acos($n)
     {
         return $this->_math('acos', 'rad', $n);
     }
 
+    /**
+     * @return Less_Tree_Dimension|mixed
+     * @throws Less_Exception_Compiler
+     */
     private function _math()
     {
         $args = func_get_args();
@@ -771,33 +1041,60 @@ class Less_Functions
         ) . ')');
     }
 
+    /**
+     * @return Less_Tree_Anonymous
+     */
     public function min()
     {
         $args = func_get_args();
         return $this->_minmax(true, $args);
     }
 
+    /**
+     * @return Less_Tree_Anonymous
+     */
     public function max()
     {
         $args = func_get_args();
         return $this->_minmax(false, $args);
     }
 
+    /**
+     * @param $n
+     *
+     * @return Less_Tree_Anonymous
+     */
     public function getunit($n)
     {
         return new Less_Tree_Anonymous($n->unit);
     }
 
+    /**
+     * @param Less_Tree_Color $color
+     *
+     * @return Less_Tree_Anonymous
+     */
     public function argb($color)
     {
         return new Less_Tree_Anonymous($color->toARGB());
     }
 
+    /**
+     * @param $n
+     *
+     * @return Less_Tree_Dimension
+     */
     public function percentage($n)
     {
         return new Less_Tree_Dimension($n->value * 100, '%');
     }
 
+    /**
+     * @param $n
+     *
+     * @return Less_Tree_Color
+     * @throws Less_Exception_Compiler
+     */
     public function color($n)
     {
 
@@ -816,42 +1113,81 @@ class Less_Functions
         }
     }
 
-
+    /**
+     * @param $n
+     *
+     * @return Less_Tree_Keyword
+     */
     public function iscolor($n)
     {
         return $this->_isa($n, 'Less_Tree_Color');
     }
 
+    /**
+     * @param $n
+     *
+     * @return Less_Tree_Keyword
+     */
     public function isnumber($n)
     {
         return $this->_isa($n, 'Less_Tree_Dimension');
     }
 
+    /**
+     * @param $n
+     *
+     * @return Less_Tree_Keyword
+     */
     public function isstring($n)
     {
         return $this->_isa($n, 'Less_Tree_Quoted');
     }
 
+    /**
+     * @param $n
+     *
+     * @return Less_Tree_Keyword
+     */
     public function iskeyword($n)
     {
         return $this->_isa($n, 'Less_Tree_Keyword');
     }
 
+    /**
+     * @param $n
+     *
+     * @return Less_Tree_Keyword
+     */
     public function isurl($n)
     {
         return $this->_isa($n, 'Less_Tree_Url');
     }
 
+    /**
+     * @param $n
+     *
+     * @return Less_Tree_Keyword
+     */
     public function ispixel($n)
     {
         return $this->isunit($n, 'px');
     }
 
+    /**
+     * @param $n
+     *
+     * @return Less_Tree_Keyword
+     */
     public function ispercentage($n)
     {
         return $this->isunit($n, '%');
     }
 
+    /**
+     * @param $n
+     *
+     * @return Less_Tree_Keyword
+     */
     public function isem($n)
     {
         return $this->isunit($n, 'em');
@@ -1151,8 +1487,8 @@ class Less_Functions
      * Color Blending
      * ref: http://www.w3.org/TR/compositing-1
      * @param $mode
-     * @param $color1
-     * @param $color2
+     * @param Less_Tree_Color $color1
+     * @param Less_Tree_Color $color2
      *
      * @return Less_Tree_Color
      */
@@ -1177,8 +1513,8 @@ class Less_Functions
     }
 
     /**
-     * @param $color1
-     * @param $color2
+     * @param Less_Tree_Color $color1
+     * @param Less_Tree_Color $color2
      *
      * @return Less_Tree_Color
      */
@@ -1199,8 +1535,8 @@ class Less_Functions
     }
 
     /**
-     * @param $color1
-     * @param $color2
+     * @param Less_Tree_Color $color1
+     * @param Less_Tree_Color $color2
      *
      * @return Less_Tree_Color
      */
@@ -1221,8 +1557,8 @@ class Less_Functions
     }
 
     /**
-     * @param $color1
-     * @param $color2
+     * @param Less_Tree_Color $color1
+     * @param Less_Tree_Color $color2
      *
      * @return Less_Tree_Color
      */
@@ -1246,8 +1582,8 @@ class Less_Functions
     }
 
     /**
-     * @param $color1
-     * @param $color2
+     * @param Less_Tree_Color $color1
+     * @param Less_Tree_Color $color2
      *
      * @return Less_Tree_Color
      */
@@ -1275,8 +1611,8 @@ class Less_Functions
     }
 
     /**
-     * @param $color1
-     * @param $color2
+     * @param Less_Tree_Color $color1
+     * @param Less_Tree_Color $color2
      *
      * @return Less_Tree_Color
      */
@@ -1297,8 +1633,8 @@ class Less_Functions
     }
 
     /**
-     * @param $color1
-     * @param $color2
+     * @param Less_Tree_Color $color1
+     * @param Less_Tree_Color $color2
      *
      * @return Less_Tree_Color
      */
@@ -1341,8 +1677,8 @@ class Less_Functions
     }
 
     /**
-     * @param $color1
-     * @param $color2
+     * @param Less_Tree_Color $color1
+     * @param Less_Tree_Color $color2
      *
      * @return Less_Tree_Color
      */
@@ -1364,8 +1700,8 @@ class Less_Functions
     }
 
     /**
-     * @param $color1
-     * @param $color2
+     * @param Less_Tree_Color $color1
+     * @param Less_Tree_Color $color2
      *
      * @return Less_Tree_Color
      */

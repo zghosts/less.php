@@ -50,6 +50,9 @@ class Less_Tree_Assignment extends Less_Tree
         $this->value->genCSS($output);
     }
 
+    /**
+     * @return string
+     */
     public function toCss()
     {
         return $this->key . '=' . $this->value->toCSS();

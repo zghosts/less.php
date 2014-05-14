@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class Less_Tree_Mixin_Definition
+ */
 class Less_Tree_Mixin_Definition extends Less_Tree_Ruleset
 {
     public $name;
@@ -14,8 +17,16 @@ class Less_Tree_Mixin_Definition extends Less_Tree_Ruleset
     public $variadic;
     public $type = 'MixinDefinition';
 
-
-    // less.js : /lib/less/tree/mixin.js : tree.mixin.Definition
+    /**
+     * less.js : /lib/less/tree/mixin.js : tree.mixin.Definition
+     *
+     * @param      $name
+     * @param      $params
+     * @param null $rules
+     * @param      $condition
+     * @param bool $variadic
+     * @param null $frames
+     */
     public function __construct($name, $params, $rules, $condition, $variadic = false, $frames = null)
     {
         $this->name      = $name;
@@ -47,13 +58,25 @@ class Less_Tree_Mixin_Definition extends Less_Tree_Ruleset
     //	$this->condition = $visitor->visit($this->condition);
     //}
 
-
+    /**
+     * @return string
+     */
     public function toCSS()
     {
         return '';
     }
 
-    // less.js : /lib/less/tree/mixin.js : tree.mixin.Definition.evalParams
+    /**
+     * less.js : /lib/less/tree/mixin.js : tree.mixin.Definition.evalParams
+     *
+     * @param       $env
+     * @param       $mixinFrames
+     * @param array $args
+     * @param array $evaldArguments
+     *
+     * @return Less_Tree_Ruleset
+     * @throws Less_Exception_Compiler
+     */
     public function compileParams($env, $mixinFrames, $args = array(), &$evaldArguments = array())
     {
         $frame      = new Less_Tree_Ruleset(null, array());
@@ -152,6 +175,11 @@ class Less_Tree_Mixin_Definition extends Less_Tree_Ruleset
         return $frame;
     }
 
+    /**
+     * @param Less_Environment $env
+     *
+     * @return Less_Tree_Mixin_Definition|Less_Tree_Ruleset
+     */
     public function compile($env)
     {
         if ($this->frames) {
@@ -160,6 +188,13 @@ class Less_Tree_Mixin_Definition extends Less_Tree_Ruleset
         return new Less_Tree_Mixin_Definition($this->name, $this->params, $this->rules, $this->condition, $this->variadic, $env->frames);
     }
 
+    /**
+     * @param Less_Environment $env
+     * @param array            $args
+     * @param null             $important
+     *
+     * @return Less_Tree_Ruleset
+     */
     public function evalCall($env, $args = null, $important = null)
     {
 
@@ -196,7 +231,12 @@ class Less_Tree_Mixin_Definition extends Less_Tree_Ruleset
         return $ruleset;
     }
 
-
+    /**
+     * @param array            $args
+     * @param Less_Environment $env
+     *
+     * @return bool
+     */
     public function matchCondition($args, $env)
     {
 
@@ -216,6 +256,12 @@ class Less_Tree_Mixin_Definition extends Less_Tree_Ruleset
         return (bool)$this->condition->compile($compile_env);
     }
 
+    /**
+     * @param array            $args
+     * @param Less_Environment $env
+     *
+     * @return bool
+     */
     public function matchArgs($args, $env = null)
     {
         $argsLength = count($args);

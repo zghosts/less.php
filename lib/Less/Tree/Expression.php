@@ -14,17 +14,29 @@ class Less_Tree_Expression extends Less_Tree
     public $parensInOp = false;
     public $type = 'Expression';
 
+    /**
+     * @param      $value
+     * @param null $parens
+     */
     public function __construct($value, $parens = null)
     {
         $this->value  = $value;
         $this->parens = $parens;
     }
 
+    /**
+     * @param Less_Visitor $visitor
+     */
     public function accept($visitor)
     {
         $this->value = $visitor->visitArray($this->value);
     }
 
+    /**
+     * @param Less_Environment $env
+     *
+     * @return Less_Tree_Expression|Less_Tree_Paren|null
+     */
     public function compile($env)
     {
 

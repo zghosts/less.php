@@ -50,11 +50,19 @@ class Less_Tree_Extend extends Less_Tree
         $this->parent_ids = array($this->object_id);
     }
 
+    /**
+     * @param Less_Visitor $visitor
+     */
     public function accept($visitor)
     {
         $this->selector = $visitor->visitObj($this->selector);
     }
 
+    /**
+     * @param Less_Environment $env
+     *
+     * @return $this
+     */
     public function compile($env)
     {
         Less_Parser::$has_extends = true;
@@ -63,6 +71,9 @@ class Less_Tree_Extend extends Less_Tree
         //return new Less_Tree_Extend( $this->selector->compile($env), $this->option, $this->index);
     }
 
+    /**
+     * @param array $selectors
+     */
     public function findSelfSelectors($selectors)
     {
         $selfElements = array();

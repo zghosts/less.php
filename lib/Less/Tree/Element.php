@@ -17,6 +17,12 @@ class Less_Tree_Element extends Less_Tree
 
     public $value_is_object = false;
 
+    /**
+     * @param      $combinator
+     * @param      $value
+     * @param null $index
+     * @param null $currentFileInfo
+     */
     public function __construct($combinator, $value, $index = null, $currentFileInfo = null)
     {
 
@@ -31,6 +37,9 @@ class Less_Tree_Element extends Less_Tree
         $this->currentFileInfo = $currentFileInfo;
     }
 
+    /**
+     * @param Less_Visitor $visitor
+     */
     public function accept($visitor)
     {
         if ($this->value_is_object) { //object or string
@@ -38,6 +47,11 @@ class Less_Tree_Element extends Less_Tree
         }
     }
 
+    /**
+     * @param Less_Environment $env
+     *
+     * @return $this|Less_Tree_Element
+     */
     public function compile($env)
     {
 
@@ -62,6 +76,9 @@ class Less_Tree_Element extends Less_Tree
         $output->add($this->toCSS(), $this->currentFileInfo, $this->index);
     }
 
+    /**
+     * @return string
+     */
     public function toCSS()
     {
 

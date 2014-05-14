@@ -13,6 +13,10 @@ class Less_Tree_Dimension extends Less_Tree
     public $unit;
     public $type = 'Dimension';
 
+    /**
+     * @param      $value
+     * @param null $unit
+     */
     public function __construct($value, $unit = null)
     {
         $this->value = floatval($value);
@@ -26,16 +30,25 @@ class Less_Tree_Dimension extends Less_Tree
         }
     }
 
+    /**
+     * @param Less_Visitor $visitor
+     */
     public function accept($visitor)
     {
         $this->unit = $visitor->visitObj($this->unit);
     }
 
+    /**
+     * @return $this
+     */
     public function compile()
     {
         return $this;
     }
 
+    /**
+     * @return Less_Tree_Color
+     */
     public function toColor()
     {
         return new Less_Tree_Color(array($this->value, $this->value, $this->value));
@@ -78,6 +91,9 @@ class Less_Tree_Dimension extends Less_Tree
         $this->unit->genCSS($output);
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->toCSS();
@@ -166,11 +182,19 @@ class Less_Tree_Dimension extends Less_Tree
         }
     }
 
+    /**
+     * @return Less_Tree_Dimension
+     */
     public function unify()
     {
         return $this->convertTo(array('length' => 'px', 'duration' => 's', 'angle' => 'rad'));
     }
 
+    /**
+     * @param $conversions
+     *
+     * @return Less_Tree_Dimension
+     */
     public function convertTo($conversions)
     {
         $value = $this->value;

@@ -114,10 +114,14 @@ class Less_Cache
         return self::Get($less_files, $parser_options, false);
     }
 
+    /**
+     * @param       $less_files
+     * @param array $parser_options
+     *
+     * @return string
+     */
     public static function Cache(&$less_files, $parser_options = array())
     {
-
-
         // get less.php if it exists
         $file = dirname(__FILE__) . '/Less.php';
         if (file_exists($file) && !class_exists('Less_Parser')) {
@@ -148,7 +152,12 @@ class Less_Cache
         return $compiled;
     }
 
-
+    /**
+     * @param $compiled_name
+     * @param $parser_options
+     *
+     * @return string
+     */
     private static function OutputFile($compiled_name, $parser_options)
     {
 
@@ -166,7 +175,11 @@ class Less_Cache
         return Less_Cache::$cache_dir . $compiled_name;
     }
 
-
+    /**
+     * @param $files
+     *
+     * @return string
+     */
     private static function CompiledName($files)
     {
 
@@ -179,12 +192,17 @@ class Less_Cache
         return 'lessphp_' . sha1(json_encode($temp)) . '.css';
     }
 
-
+    /**
+     * @param string $dir
+     */
     public static function SetCacheDir($dir)
     {
         Less_Cache::$cache_dir = $dir;
     }
 
+    /**
+     * @throws Less_Exception_Parser
+     */
     public static function CheckCacheDir()
     {
 

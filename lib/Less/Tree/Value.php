@@ -12,16 +12,27 @@ class Less_Tree_Value extends Less_Tree
     public $type = 'Value';
     public $value;
 
+    /**
+     * @param $value
+     */
     public function __construct($value)
     {
         $this->value = $value;
     }
 
+    /**
+     * @param Less_Visitor $visitor
+     */
     public function accept($visitor)
     {
         $this->value = $visitor->visitArray($this->value);
     }
 
+    /**
+     * @param Less_Environment $env
+     *
+     * @return Less_Tree_Value
+     */
     public function compile($env)
     {
 

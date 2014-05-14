@@ -159,11 +159,21 @@ class Less_Colors
         'yellowgreen'          => '#9acd32'
     );
 
+    /**
+     * @param $color
+     *
+     * @return bool
+     */
     public static function hasOwnProperty($color)
     {
         return isset(self::$colors[$color]);
     }
 
+    /**
+     * @param $color
+     *
+     * @return mixed
+     */
     public static function color($color)
     {
         return self::$colors[$color];

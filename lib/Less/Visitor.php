@@ -18,6 +18,9 @@ class Less_Visitor
      */
     protected $_visitFnCache = array();
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->_visitFnCache = get_class_methods(get_class($this));

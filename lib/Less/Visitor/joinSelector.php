@@ -77,6 +77,9 @@ class Less_Visitor_joinSelector extends Less_Visitor
         array_pop($this->contexts);
     }
 
+    /**
+     * @param Less_Tree_Media $mediaNode
+     */
     public function visitMedia($mediaNode)
     {
         $context = end($this->contexts); //$context = $this->contexts[ count($this->contexts) - 1];

@@ -15,6 +15,11 @@ class Less_Tree_Url extends Less_Tree
     public $isEvald;
     public $type = 'Url';
 
+    /**
+     * @param      $value
+     * @param null $currentFileInfo
+     * @param null $isEvald
+     */
     public function __construct($value, $currentFileInfo = null, $isEvald = null)
     {
         $this->value           = $value;
@@ -22,6 +27,9 @@ class Less_Tree_Url extends Less_Tree
         $this->isEvald         = $isEvald;
     }
 
+    /**
+     * @param Less_Visitor $visitor
+     */
     public function accept($visitor)
     {
         $this->value = $visitor->visitObj($this->value);

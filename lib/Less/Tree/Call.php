@@ -17,6 +17,12 @@ class Less_Tree_Call extends Less_Tree
     protected $currentFileInfo;
     public $type = 'Call';
 
+    /**
+     * @param      $name
+     * @param      $args
+     * @param      $index
+     * @param null $currentFileInfo
+     */
     public function __construct($name, $args, $index, $currentFileInfo = null)
     {
         $this->name            = $name;
@@ -25,6 +31,9 @@ class Less_Tree_Call extends Less_Tree
         $this->currentFileInfo = $currentFileInfo;
     }
 
+    /**
+     * @param Less_Visitor $visitor
+     */
     public function accept($visitor)
     {
         $this->args = $visitor->visitArray($this->args);

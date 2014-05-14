@@ -14,6 +14,11 @@ class Less_Tree_Unit extends Less_Tree
     public $backupUnit;
     public $type = 'Unit';
 
+    /**
+     * @param array $numerator
+     * @param array $denominator
+     * @param null  $backupUnit
+     */
     public function __construct($numerator = array(), $denominator = array(), $backupUnit = null)
     {
         $this->numerator   = $numerator;
@@ -41,6 +46,9 @@ class Less_Tree_Unit extends Less_Tree
         }
     }
 
+    /**
+     * @return string
+     */
     public function toString()
     {
         $returnStr = implode('*', $this->numerator);
@@ -50,6 +58,9 @@ class Less_Tree_Unit extends Less_Tree
         return $returnStr;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->toString();
@@ -66,33 +77,52 @@ class Less_Tree_Unit extends Less_Tree
         return $this->is($other->toString()) ? 0 : -1;
     }
 
+    /**
+     * @param $unitString
+     *
+     * @return bool
+     */
     public function is($unitString)
     {
         return $this->toString() === $unitString;
     }
 
+    /**
+     * @return bool
+     */
     public function isLength()
     {
         $css = $this->toCSS();
         return !!preg_match('/px|em|%|in|cm|mm|pc|pt|ex/', $css);
     }
 
+    /**
+     * @return bool
+     */
     public function isAngle()
     {
         return isset(Less_Tree_UnitConversions::$angle[$this->toCSS()]);
     }
 
+    /**
+     * @return bool
+     */
     public function isEmpty()
     {
         return !$this->numerator && !$this->denominator;
     }
 
+    /**
+     * @return bool
+     */
     public function isSingular()
     {
         return count($this->numerator) <= 1 && !$this->denominator;
     }
 
-
+    /**
+     * @return array
+     */
     public function usedUnits()
     {
         $result = array();
@@ -116,6 +146,9 @@ class Less_Tree_Unit extends Less_Tree
         return $result;
     }
 
+    /**
+     * Cancel
+     */
     public function cancel()
     {
         $counter = array();

@@ -12,6 +12,9 @@ class Less_Tree_Negative extends Less_Tree
     public $value;
     public $type = 'Negative';
 
+    /**
+     * @param $node
+     */
     public function __construct($node)
     {
         $this->value = $node;
@@ -30,6 +33,11 @@ class Less_Tree_Negative extends Less_Tree
         $this->value->genCSS($output);
     }
 
+    /**
+     * @param Less_Environment $env
+     *
+     * @return Less_Tree_Color|Less_Tree_Dimension|Less_Tree_Negative|Less_Tree_Operation
+     */
     public function compile($env)
     {
         if (Less_Environment::isMathOn()) {

@@ -47,6 +47,9 @@ class Less_Tree_Rule extends Less_Tree
         $this->variable        = (is_string($name) && $name[0] === '@');
     }
 
+    /**
+     * @param Less_Visitor $visitor
+     */
     public function accept($visitor)
     {
         $this->value = $visitor->visitObj($this->value);
@@ -74,6 +77,13 @@ class Less_Tree_Rule extends Less_Tree
         );
     }
 
+    /**
+     * @param Less_Environment $env
+     *
+     * @return Less_Tree_Rule
+     * @throws Exception
+     * @throws Less_Exception_Parser\
+     */
     public function compile($env)
     {
 
@@ -121,7 +131,12 @@ class Less_Tree_Rule extends Less_Tree
         return $return;
     }
 
-
+    /**
+     * @param Less_Environment $env
+     * @param array            $name
+     *
+     * @return string
+     */
     public function CompileName($env, $name)
     {
         $output = new Less_Output();
@@ -131,6 +146,9 @@ class Less_Tree_Rule extends Less_Tree
         return $output->toString();
     }
 
+    /**
+     * @return Less_Tree_Rule
+     */
     public function makeImportant()
     {
         return new Less_Tree_Rule($this->name, $this->value, '!important', $this->merge, $this->index, $this->currentFileInfo, $this->inline);

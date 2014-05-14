@@ -26,11 +26,20 @@ class Less_Tree_Operation extends Less_Tree
         $this->isSpaced = $isSpaced;
     }
 
+    /**
+     * @param Less_Visitor $visitor
+     */
     public function accept($visitor)
     {
         $this->operands = $visitor->visitArray($this->operands);
     }
 
+    /**
+     * @param Less_Environment $env
+     *
+     * @return Less_Tree_Color|Less_Tree_Dimension|Less_Tree_Operation
+     * @throws Less_Exception_Compiler
+     */
     public function compile($env)
     {
         $a = $this->operands[0]->compile($env);
