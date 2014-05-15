@@ -15,7 +15,14 @@ class Less_Tree_Ruleset extends Less_Tree
 
     public $strictImports;
 
+    /**
+     * @var Less_Tree_Selector[]
+     */
     public $selectors;
+
+    /**
+     * @var Less_Tree_Rule[]
+     */
     public $rules;
     public $root;
     public $allowImports;
@@ -30,6 +37,9 @@ class Less_Tree_Ruleset extends Less_Tree
 
     public $first_oelements;
 
+    /**
+     * set ruleset index
+     */
     public function SetRulesetIndex()
     {
         $this->ruleset_id      = Less_Parser::$next_id++;

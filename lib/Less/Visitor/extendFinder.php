@@ -36,8 +36,8 @@ class Less_Visitor_extendFinder extends Less_Visitor
     }
 
     /**
-     * @param Less_Rule $ruleNode
-     * @param $visitDeeper
+     * @param Less_Tree_Rule $ruleNode
+     * @param bool           $visitDeeper
      */
     public function visitRule($ruleNode, &$visitDeeper)
     {
@@ -46,7 +46,7 @@ class Less_Visitor_extendFinder extends Less_Visitor
 
     /**
      * @param Less_Tree_Mixin_Definition $mixinDefinitionNode
-     * @param $visitDeeper
+     * @param bool                       $visitDeeper
      */
     public function visitMixinDefinition($mixinDefinitionNode, &$visitDeeper)
     {

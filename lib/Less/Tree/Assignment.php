@@ -10,12 +10,16 @@ class Less_Tree_Assignment extends Less_Tree
 {
 
     public $key;
+
+    /**
+     * @var Less_Tree_Value
+     */
     public $value;
     public $type = 'Assignment';
 
     /**
      * @param $key
-     * @param $val
+     * @param Less_Tree_Value $val
      */
     public function __construct($key, $val)
     {
@@ -24,7 +28,7 @@ class Less_Tree_Assignment extends Less_Tree
     }
 
     /**
-     * @param $visitor
+     * @param Less_Visitor $visitor
      */
     public function accept($visitor)
     {

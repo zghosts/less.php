@@ -82,7 +82,7 @@ class Less_Tree_Rule extends Less_Tree
      *
      * @return Less_Tree_Rule
      * @throws Exception
-     * @throws Less_Exception_Parser\
+     * @throws Less_Exception_Parser
      */
     public function compile($env)
     {

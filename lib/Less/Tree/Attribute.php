@@ -9,15 +9,27 @@
 class Less_Tree_Attribute extends Less_Tree
 {
 
+    /**
+     * @var mixed string|Less_Tree_Keyword
+     */
     public $key;
+
+    /**
+     * @var string
+     */
     public $op;
+
+    /**
+     * @var mixed string|Less_Tree_Value
+     */
     public $value;
+
     public $type = 'Attribute';
 
     /**
-     * @param $key
-     * @param $op
-     * @param $value
+     * @param string $key
+     * @param string $op
+     * @param string $value
      */
     public function __construct($key, $op, $value)
     {

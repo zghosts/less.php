@@ -9,8 +9,19 @@
 class Less_Tree_Condition extends Less_Tree
 {
 
+    /**
+     * @var string
+     */
     public $op;
+
+    /**
+     * @var Less_Tree_Anonymous
+     */
     public $lvalue;
+
+    /**
+     * @var Less_Tree_Anonymous
+     */
     public $rvalue;
     public $index;
     public $negate;
