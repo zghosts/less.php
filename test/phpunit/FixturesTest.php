@@ -1,100 +1,98 @@
 <?php
 
 
-class phpunit_FixturesTest extends phpunit_bootstrap{
+class phpunit_FixturesTest extends phpunit_bootstrap
+{
 
 
-	/**
-	 * Test the contents of the files in /test/Fixtures/lessjs/expected
-	 *
-	 */
-	function testLessJs(){
+    /**
+     * Test the contents of the files in /test/Fixtures/lessjs/expected
+     *
+     */
+    public function testLessJs()
+    {
 
-		echo "\nBegin Tests";
+        echo "\nBegin Tests";
 
-		$css_dir = $this->fixtures_dir.'/lessjs/expected';
-		$files = scandir($css_dir);
+        $css_dir = $this->fixtures_dir . '/lessjs/expected';
+        $files   = scandir($css_dir);
 
-		foreach($files as $file){
-			if( $file == '.' || $file == '..' ){
-				continue;
-			}
+        foreach ($files as $file) {
+            if ($file == '.' || $file == '..') {
+                continue;
+            }
 
-			$expected_file = $css_dir.'/'.$file;
+            $expected_file = $css_dir . '/' . $file;
 
-			if( is_dir($expected_file) ){
-				continue;
-			}
+            if (is_dir($expected_file)) {
+                continue;
+            }
 
-			$this->CompareFile( $expected_file );
-		}
+            $this->CompareFile($expected_file);
+        }
 
-		echo "\n";
-	}
-
-
-
-	/**
-	 * Change a css file name to a less file name
-	 *
-	 * eg: /Fixtures/lessjs/css/filename.css -> /Fixtures/lessjs/less/filename.less
-	 *
-	 */
-	function TranslateFile( $file_css, $dir = 'less', $type = 'less' ){
-
-		$filename = basename($file_css);
-		$filename = substr($filename,0,-4);
-
-		return dirname( dirname($file_css) ).'/'.$dir.'/'.$filename.'.'.$type;
-	}
+        echo "\n";
+    }
 
 
-	/**
-	 * Compare the parser results with the expected css
-	 *
-	 */
-	function CompareFile( $expected_file ){
+    /**
+     * Change a css file name to a less file name
+     *
+     * eg: /Fixtures/lessjs/css/filename.css -> /Fixtures/lessjs/less/filename.less
+     *
+     */
+    public function TranslateFile($file_css, $dir = 'less', $type = 'less')
+    {
 
-		$less_file = $this->TranslateFile( $expected_file );
-		$expected_css = trim(file_get_contents($expected_file));
+        $filename = basename($file_css);
+        $filename = substr($filename, 0, -4);
 
-
-		// Check with standard parser
-		echo "\n  ".basename($expected_file);
-		echo "\n    - Standard Compiler";
-
-		$parser = new Less_Parser();
-		$parser->parseFile($less_file);
-		$css = $parser->getCss();
-		$css = trim($css);
-		$this->assertEquals( $expected_css, $css );
+        return dirname(dirname($file_css)) . '/' . $dir . '/' . $filename . '.' . $type;
+    }
 
 
-		// Check with cache
-		if( $this->cache_dir ){
+    /**
+     * Compare the parser results with the expected css
+     *
+     */
+    public function CompareFile($expected_file)
+    {
 
-			$options = array('cache_dir'=>$this->cache_dir);
-			$files = array( $less_file => '' );
-
-			echo "\n    - Regenerating Cache";
-			$css_file_name = Less_Cache::Regen( $files, $options );
-			$css = file_get_contents($this->cache_dir.'/'.$css_file_name);
-			$css = trim($css);
-			$this->assertEquals( $expected_css, $css );
+        $less_file    = $this->TranslateFile($expected_file);
+        $expected_css = trim(file_get_contents($expected_file));
 
 
+        // Check with standard parser
+        echo "\n  " . basename($expected_file);
+        echo "\n    - Standard Compiler";
 
-			// Check using the cached data
-			echo "\n    - Using Cache";
-			$css_file_name = Less_Cache::Get( $files, $options );
-			$css = file_get_contents($this->cache_dir.'/'.$css_file_name);
-			$css = trim($css);
-			$this->assertEquals( $expected_css, $css );
-
-		}
-
-
-	}
+        $parser = new Less_Parser();
+        $parser->parseFile($less_file);
+        $css = $parser->getCss();
+        $css = trim($css);
+        $this->assertEquals($expected_css, $css);
 
 
+        // Check with cache
+        if ($this->cache_dir) {
+
+            $options = array('cache_dir' => $this->cache_dir);
+            $files   = array($less_file => '');
+
+            echo "\n    - Regenerating Cache";
+            $css_file_name = Less_Cache::Regen($files, $options);
+            $css           = file_get_contents($this->cache_dir . '/' . $css_file_name);
+            $css           = trim($css);
+            $this->assertEquals($expected_css, $css);
+
+
+            // Check using the cached data
+            echo "\n    - Using Cache";
+            $css_file_name = Less_Cache::Get($files, $options);
+            $css           = file_get_contents($this->cache_dir . '/' . $css_file_name);
+            $css           = trim($css);
+            $this->assertEquals($expected_css, $css);
+
+        }
+    }
 }
