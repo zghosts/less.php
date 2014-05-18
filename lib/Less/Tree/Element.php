@@ -10,6 +10,10 @@ class Less_Tree_Element extends Less_Tree
 {
 
     public $combinator = '';
+
+    /**
+     * @var Less_NodeInterface
+     */
     public $value = '';
     public $index;
     public $currentFileInfo;

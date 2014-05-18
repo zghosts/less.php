@@ -9,7 +9,11 @@
 class Less_Tree_DetachedRuleset extends Less_Tree
 {
 
+    /**
+     * @var Less_Tree_Ruleset
+     */
     public $ruleset;
+
     public $frames;
     public $type = 'DetachedRuleset';
 

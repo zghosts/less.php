@@ -39,9 +39,11 @@ class Less_Tree_Dimension extends Less_Tree
     }
 
     /**
+     * @param Less_Environment $env
+     *
      * @return $this
      */
-    public function compile()
+    public function compile($env)
     {
         return $this;
     }
@@ -104,7 +106,7 @@ class Less_Tree_Dimension extends Less_Tree
      * we default to the first Dimension's unit,
      * so `1px + 2em` will yield `3px`.
      * @param string $op
-     * @param        $other
+     * @param Less_Tree_Dimension $other
      *
      * @throws Less_Exception_Compiler
      * @return \Less_Tree_Dimension

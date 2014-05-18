@@ -13,6 +13,10 @@ class Less_Tree_Anonymous extends Less_Tree
     public $index;
     public $mapLines;
     public $currentFileInfo;
+
+    /**
+     * @var string
+     */
     public $type = 'Anonymous';
 
     /**
@@ -30,9 +34,11 @@ class Less_Tree_Anonymous extends Less_Tree
     }
 
     /**
+     * @param Less_Environment $env
+     *
      * @return Less_Tree_Anonymous
      */
-    public function compile()
+    public function compile($env)
     {
         return new Less_Tree_Anonymous($this->value, $this->index, $this->currentFileInfo, $this->mapLines);
     }

@@ -10,10 +10,22 @@ class Less_Tree_Media extends Less_Tree
 {
 
     public $features;
+
+    /**
+     * @var Less_Tree_Ruleset[]
+     */
     public $rules;
     public $index;
     public $currentFileInfo;
+
+    /**
+     * @var bool
+     */
     public $isReferenced;
+
+    /**
+     * @var string
+     */
     public $type = 'Media';
 
     /**
@@ -94,7 +106,7 @@ class Less_Tree_Media extends Less_Tree
     /**
      * @param string $name
      *
-     * @return mixed
+     * @return Less_NodeInterface
      */
     public function variable($name)
     {

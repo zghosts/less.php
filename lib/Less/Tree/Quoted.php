@@ -77,7 +77,7 @@ class Less_Tree_Quoted extends Less_Tree
     }
 
     /**
-     * @param $x
+     * @param Less_NodeInterface $x
      *
      * @return int
      */

@@ -9,6 +9,9 @@
 class Less_Tree_Extend extends Less_Tree
 {
 
+    /**
+     * @var Less_Tree_Selector
+     */
     public $selector;
     public $option;
     public $index;
@@ -16,7 +19,15 @@ class Less_Tree_Extend extends Less_Tree
     public $allowBefore;
     public $allowAfter;
     public $firstExtendOnThisSelectorPath;
+
+    /**
+     * @var string
+     */
     public $type = 'Extend';
+
+    /**
+     * @var Less_Tree_Ruleset
+     */
     public $ruleset;
 
 

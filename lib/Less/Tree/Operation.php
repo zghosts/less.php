@@ -10,8 +10,20 @@ class Less_Tree_Operation extends Less_Tree
 {
 
     public $op;
+
+    /**
+     * @var Less_NodeInterface[]
+     */
     public $operands;
+
+    /**
+     * @var bool
+     */
     public $isSpaced;
+
+    /**
+     * @var string
+     */
     public $type = 'Operation';
 
     /**

@@ -10,7 +10,7 @@ class Less_Tree_Mixin_Call extends Less_Tree
     public $selector;
 
     /**
-     * @var Less_TreeInterface
+     * @var array
      */
     public $arguments;
     public $index;

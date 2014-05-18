@@ -10,15 +10,28 @@ class Less_Tree_Url extends Less_Tree
 {
 
     public $attrs;
+
+    /**
+     * @var Less_NodeInterface
+     */
     public $value;
+
     public $currentFileInfo;
+
+    /**
+     * @var bool
+     */
     public $isEvald;
+
+    /**
+     * @var string
+     */
     public $type = 'Url';
 
     /**
-     * @param      $value
-     * @param null $currentFileInfo
-     * @param null $isEvald
+     * @param Less_NodeInterface $value
+     * @param string             $currentFileInfo
+     * @param bool               $isEvald
      */
     public function __construct($value, $currentFileInfo = null, $isEvald = null)
     {
@@ -29,6 +42,8 @@ class Less_Tree_Url extends Less_Tree
 
     /**
      * @param Less_Visitor $visitor
+     *
+     * @return mixed|void
      */
     public function accept($visitor)
     {
@@ -46,13 +61,13 @@ class Less_Tree_Url extends Less_Tree
     }
 
     /**
-     * @param Less_Functions $ctx
+     * @param Less_Environment $env
      *
      * @return \Less_Tree_Url
      */
-    public function compile($ctx)
+    public function compile($env)
     {
-        $val = $this->value->compile($ctx);
+        $val = $this->value->compile($env);
 
         if (!$this->isEvald) {
             // Add the base path if the URL is relative

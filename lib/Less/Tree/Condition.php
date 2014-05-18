@@ -25,6 +25,10 @@ class Less_Tree_Condition extends Less_Tree
     public $rvalue;
     public $index;
     public $negate;
+
+    /**
+     * @var string
+     */
     public $type = 'Condition';
 
     /**

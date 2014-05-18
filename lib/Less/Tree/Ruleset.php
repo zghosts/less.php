@@ -10,7 +10,15 @@ class Less_Tree_Ruleset extends Less_Tree
 {
 
     protected $lookups;
+
+    /**
+     * @var Less_NodeInterface[]
+     */
     public $_variables;
+
+    /**
+     * @var Less_Tree_Ruleset[]
+     */
     public $_rulesets;
 
     public $strictImports;
@@ -26,7 +34,12 @@ class Less_Tree_Ruleset extends Less_Tree
     public $rules;
     public $root;
     public $allowImports;
+
+    /**
+     * @var Less_Tree_Selector[]
+     */
     public $paths;
+
     public $firstRoot;
     public $type = 'Ruleset';
     public $multiMedia;
@@ -367,9 +380,9 @@ class Less_Tree_Ruleset extends Less_Tree
     }
 
     /**
-     * @param $name
+     * @param string $name
      *
-     * @return null
+     * @return Less_NodeInterface
      */
     public function variable($name)
     {
@@ -384,7 +397,7 @@ class Less_Tree_Ruleset extends Less_Tree
      * @param Less_Tree_Selector $selector
      * @param null $self
      *
-     * @return mixed
+     * @return mixed Less_Tree_Mixin_Definition
      */
     public function find($selector, $self = null)
     {

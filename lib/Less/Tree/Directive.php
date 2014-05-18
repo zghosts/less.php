@@ -10,12 +10,30 @@ class Less_Tree_Directive extends Less_Tree
 {
 
     public $name;
+
+    /**
+     * @var Less_NodeInterface
+     */
     public $value;
+
+    /**
+     * @var Less_Tree_Ruleset
+     */
     public $rules;
+
     public $index;
+
+    /**
+     * @var bool
+     */
     public $isReferenced;
+
     public $currentFileInfo;
     public $debugInfo;
+
+    /**
+     * @var string
+     */
     public $type = 'Directive';
 
     /**

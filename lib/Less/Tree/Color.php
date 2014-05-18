@@ -8,15 +8,30 @@
  */
 class Less_Tree_Color extends Less_Tree
 {
+    /**
+     * @var array
+     */
     public $rgb;
+
+    /**
+     * @var int|string
+     */
     public $alpha;
+
+    /**
+     * @var bool
+     */
     public $isTransparentKeyword;
+
+    /**
+     * @var string
+     */
     public $type = 'Color';
 
     /**
-     * @param      $rgb
-     * @param int  $a
-     * @param null $isTransparentKeyword
+     * @param array $rgb
+     * @param int   $a
+     * @param null  $isTransparentKeyword
      */
     public function __construct($rgb, $a = 1, $isTransparentKeyword = null)
     {
@@ -46,9 +61,11 @@ class Less_Tree_Color extends Less_Tree
     }
 
     /**
+     * @param Less_Environment $env
+     *
      * @return $this
      */
-    public function compile()
+    public function compile($env)
     {
         return $this;
     }

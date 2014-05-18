@@ -9,7 +9,7 @@
 class Less_VisitorReplacing extends Less_Visitor
 {
     /**
-     * @param $node
+     * @param Less_Tree $node
      *
      * @return mixed
      */
@@ -20,7 +20,9 @@ class Less_VisitorReplacing extends Less_Visitor
         if (isset($this->_visitFnCache[$funcName])) {
 
             $visitDeeper = true;
-            $node        = $this->$funcName($node, $visitDeeper);
+
+            /** @var Less_NodeInterface $node */
+            $node = $this->$funcName($node, $visitDeeper);
 
             if ($node) {
                 if ($visitDeeper && is_object($node)) {

@@ -28,7 +28,7 @@ class Less_Visitor
     }
 
     /**
-     * @param $node
+     * @param Less_Tree $node
      *
      * @return mixed
      */

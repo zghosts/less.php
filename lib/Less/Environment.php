@@ -30,12 +30,12 @@ class Less_Environment
     public $importMultiple = false; // whether we are currently importing multiple copies
 
     /**
-     * @var array
+     * @var Less_Tree_Ruleset[]
      */
     public $frames = array();
 
     /**
-     * @var array
+     * @var Less_Tree_Media[]
      */
     public $mediaBlocks = array();
 

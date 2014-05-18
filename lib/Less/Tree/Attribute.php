@@ -24,6 +24,9 @@ class Less_Tree_Attribute extends Less_Tree
      */
     public $value;
 
+    /**
+     * @var string
+     */
     public $type = 'Attribute';
 
     /**

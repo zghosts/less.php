@@ -96,7 +96,7 @@ class Less_Visitor_extendFinder extends Less_Visitor
     /**
      * @param Less_Tree_Ruleset $rulesetNode
      * @param $selectorPath
-     * @param $extend
+     * @param Less_Tree_Extend  $extend
      * @param $j
      */
     public function allExtendsStackPush($rulesetNode, $selectorPath, $extend, &$j)

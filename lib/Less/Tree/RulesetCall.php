@@ -22,6 +22,8 @@ class Less_Tree_RulesetCall extends Less_Tree
 
     /**
      * @param Less_Visitor $visitor
+     *
+     * @return mixed|void
      */
     public function accept($visitor)
     {

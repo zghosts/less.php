@@ -132,8 +132,8 @@ class Less_Tree_Rule extends Less_Tree
     }
 
     /**
-     * @param Less_Environment $env
-     * @param array            $name
+     * @param Less_Environment   $env
+     * @param Less_NodeInterface[] $name
      *
      * @return string
      */

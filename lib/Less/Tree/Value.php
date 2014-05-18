@@ -8,8 +8,14 @@
  */
 class Less_Tree_Value extends Less_Tree
 {
-
+    /**
+     * @var string
+     */
     public $type = 'Value';
+
+    /**
+     * @var Less_NodeInterface[]
+     */
     public $value;
 
     /**

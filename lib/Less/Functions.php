@@ -47,8 +47,8 @@ class Less_Functions
     }
 
     /**
-     * @param     $val
-     * @param int $max
+     * @param array $val
+     * @param mixed $max
      *
      * @return mixed
      */
@@ -58,7 +58,7 @@ class Less_Functions
     }
 
     /**
-     * @param $value
+     * @param float $value
      *
      * @return float
      */
@@ -77,7 +77,7 @@ class Less_Functions
     }
 
     /**
-     * @param $n
+     * @param mixed $n
      *
      * @return float
      * @throws Less_Exception_Compiler
@@ -97,8 +97,8 @@ class Less_Functions
     }
 
     /**
-     * @param     $n
-     * @param int $size
+     * @param mixed $n
+     * @param int   $size
      *
      * @return float
      */

@@ -6,8 +6,13 @@
  * @package    Less
  * @subpackage tree
  */
-class Less_Tree
+class Less_Tree implements Less_NodeInterface
 {
+
+    /**
+     * @var string
+     */
+    public $type = null;
 
     public $cache_string;
 
@@ -35,7 +40,7 @@ class Less_Tree
 
 
     /**
-     * @param                     $output
+     * @param Less_Output         $output
      * @param Less_Tree_Ruleset[] $rules
      */
     public static function outputRuleset($output, $rules)
@@ -73,7 +78,9 @@ class Less_Tree
     }
 
     /**
-     * @param $visitor
+     * @param Less_Visitor $visitor
+     *
+     * @return mixed|void
      */
     public function accept($visitor)
     {
@@ -90,6 +97,17 @@ class Less_Tree
             }
         }
     }
+
+    /**
+     * @param Less_Environment $env
+     *
+     * @return $this|Less_NodeInterface
+     */
+    public function compile($env)
+    {
+        return $this;
+    }
+
 
 
     /**

@@ -8,12 +8,18 @@
  */
 class Less_Tree_Negative extends Less_Tree
 {
-
+    /**
+     * @var Less_NodeInterface
+     */
     public $value;
+
+    /**
+     * @var string
+     */
     public $type = 'Negative';
 
     /**
-     * @param $node
+     * @param Less_NodeInterface $node
      */
     public function __construct($node)
     {

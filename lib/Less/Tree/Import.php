@@ -20,12 +20,25 @@ class Less_Tree_Import extends Less_Tree
 
     public $options;
     public $index;
+
+    /**
+     * @var Less_NodeInterface
+     */
     public $path;
+
+    /**
+     * @var Less_NodeInterface
+     */
     public $features;
+
     public $currentFileInfo;
     public $css;
     public $skip;
     public $root;
+
+    /**
+     * @var string
+     */
     public $type = 'Import';
 
     /**
@@ -67,6 +80,8 @@ class Less_Tree_Import extends Less_Tree
      *  ruleset.
      *
      * @param Less_Visitor $visitor
+     *
+     * @return mixed|void
      */
     public function accept($visitor)
     {

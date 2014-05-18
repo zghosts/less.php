@@ -58,9 +58,11 @@ class Less_Tree_Comment extends Less_Tree
     }
 
     /**
+     * @param Less_Environment $env
+     *
      * @return $this
      */
-    public function compile()
+    public function compile($env)
     {
         return $this;
     }

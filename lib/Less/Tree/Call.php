@@ -9,12 +9,24 @@
  */
 class Less_Tree_Call extends Less_Tree
 {
+    /**
+     * @var Less_NodeInterface
+     */
     public $value;
 
     protected $name;
+
+    /**
+     * @var Less_NodeInterface[]
+     */
     protected $args;
+
     protected $index;
     protected $currentFileInfo;
+
+    /**
+     * @var string
+     */
     public $type = 'Call';
 
     /**
@@ -33,6 +45,8 @@ class Less_Tree_Call extends Less_Tree
 
     /**
      * @param Less_Visitor $visitor
+     *
+     * @return mixed|void
      */
     public function accept($visitor)
     {

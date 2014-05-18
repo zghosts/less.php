@@ -9,6 +9,9 @@
 class Less_Visitor_joinSelector extends Less_Visitor
 {
 
+    /**
+     * @var array
+     */
     public $contexts = array(array());
 
     /**
@@ -40,7 +43,7 @@ class Less_Visitor_joinSelector extends Less_Visitor
     }
 
     /**
-     * @param $rulesetNode
+     * @param Less_Tree_Ruleset $rulesetNode
      */
     public function visitRuleset($rulesetNode)
     {

@@ -9,14 +9,18 @@
 class Less_Tree_Expression extends Less_Tree
 {
 
+    /**
+     * @var Less_NodeInterface[]
+     */
     public $value = array();
+
     public $parens = false;
     public $parensInOp = false;
     public $type = 'Expression';
 
     /**
-     * @param      $value
-     * @param null $parens
+     * @param Less_NodeInterface $value
+     * @param null               $parens
      */
     public function __construct($value, $parens = null)
     {

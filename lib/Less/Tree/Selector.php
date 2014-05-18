@@ -9,15 +9,43 @@
 class Less_Tree_Selector extends Less_Tree
 {
 
+    /**
+     * @var Less_Tree_Element[]
+     */
     public $elements;
+
+    /**
+     * @var Less_Tree_Condition
+     */
     public $condition;
+
+    /**
+     * @var Less_Tree_Extend[]
+     */
     public $extendList = array();
     public $_css;
     public $index;
+
+    /**
+     * @var bool
+     */
     public $evaldCondition = false;
+
+    /**
+     * @var string
+     */
     public $type = 'Selector';
+
+    /**
+     * @var array|null
+     */
     public $currentFileInfo = array();
+
+    /**
+     * @var bool|null
+     */
     public $isReferenced;
+
     public $mediaEmpty;
 
     public $elements_len = 0;

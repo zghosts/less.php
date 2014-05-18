@@ -15,6 +15,10 @@ class Less_Tree_Assignment extends Less_Tree
      * @var Less_Tree_Value
      */
     public $value;
+
+    /**
+     * @var string
+     */
     public $type = 'Assignment';
 
     /**

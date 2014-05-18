@@ -8,8 +8,14 @@
  */
 class Less_Tree_Paren extends Less_Tree
 {
-
+    /**
+     * @var Less_NodeInterface
+     */
     public $value;
+
+    /**
+     * @var string
+     */
     public $type = 'Paren';
 
     /**
