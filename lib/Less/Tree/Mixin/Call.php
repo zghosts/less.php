@@ -8,6 +8,10 @@ class Less_Tree_Mixin_Call extends Less_Tree
 {
 
     public $selector;
+
+    /**
+     * @var Less_TreeInterface
+     */
     public $arguments;
     public $index;
     public $currentFileInfo;
@@ -162,7 +166,9 @@ class Less_Tree_Mixin_Call extends Less_Tree
             ) . '`', null, $this->index, $this->currentFileInfo);
 
         } else {
-            throw new Less_Exception_Compiler(trim($this->selector->toCSS()) . " is undefined", null, $this->index);
+            throw new Less_Exception_Compiler(trim(
+                $this->selector->toCSS()
+            ) . " is undefined in " . $this->currentFileInfo['filename'], null, $this->index);
         }
 
     }

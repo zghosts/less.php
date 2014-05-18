@@ -12,7 +12,15 @@ class Less_Tree_Variable extends Less_Tree
     public $name;
     public $index;
     public $currentFileInfo;
+
+    /**
+     * @var bool
+     */
     public $evaluating = false;
+
+    /**
+     * @var string
+     */
     public $type = 'Variable';
 
     /**
@@ -37,7 +45,7 @@ class Less_Tree_Variable extends Less_Tree
     {
 
         if ($this->name[1] === '@') {
-            $v    = new Less_Tree_Variable(substr($this->name, 1), $this->index + 1);
+            $v    = new Less_Tree_Variable(substr($this->name, 1), $this->index + 1, $this->currentFileInfo);
             $name = '@' . $v->compile($env)->value;
         } else {
             $name = $this->name;
@@ -57,6 +65,6 @@ class Less_Tree_Variable extends Less_Tree
             }
         }
 
-        throw new Less_Exception_Compiler("variable " . $name . " is undefined", null, $this->index);
+        throw new Less_Exception_Compiler("variable " . $name . " is undefined in " . $this->currentFileInfo['filename'], null, $this->index);
     }
 }
