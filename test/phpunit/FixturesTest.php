@@ -3,8 +3,6 @@
 
 class phpunit_FixturesTest extends phpunit_bootstrap
 {
-
-
     /**
      * Test the contents of the files in /test/Fixtures/lessjs/expected
      *
