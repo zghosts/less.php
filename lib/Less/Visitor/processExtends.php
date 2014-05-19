@@ -557,7 +557,7 @@ class Less_Visitor_processExtends extends Less_Visitor
     }
 
     /**
-     * @param Less_Tree_Media $mediaNode
+     * @param Less_Tree_Ruleset $mediaNode
      */
     protected function visitMedia($mediaNode)
     {
@@ -571,7 +571,7 @@ class Less_Visitor_processExtends extends Less_Visitor
     }
 
     /**
-     * @param Less_Tree_Directive $directiveNode
+     * @param Less_Tree_Ruleset $directiveNode
      */
     protected function visitDirective($directiveNode)
     {

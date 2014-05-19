@@ -142,7 +142,7 @@ class Less_Visitor_extendFinder extends Less_Visitor
     }
 
     /**
-     * @param Less_Tree_Directive $directiveNode
+     * @param Less_Tree_Ruleset $directiveNode
      */
     public function visitDirective($directiveNode)
     {

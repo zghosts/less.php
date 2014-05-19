@@ -32,6 +32,7 @@ class Less_Tree_Ruleset extends Less_Tree
      * @var Less_Tree_Rule[]
      */
     public $rules;
+
     public $root;
     public $allowImports;
 

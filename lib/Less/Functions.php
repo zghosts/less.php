@@ -612,7 +612,7 @@ class Less_Functions
     }
 
     /**
-     * @param string|Less_Tree_JavaScript $str
+     * @param mixed string|Less_Tree_JavaScript $str
      *
      * @return Less_Tree_Anonymous
      */

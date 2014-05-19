@@ -17,6 +17,10 @@ class Less_Tree_Rule extends Less_Tree
     public $inline;
     public $variable;
     public $currentFileInfo;
+
+    /**
+     * @var string
+     */
     public $type = 'Rule';
 
     /**
