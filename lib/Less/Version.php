@@ -11,7 +11,7 @@ class Less_Version
     /**
      * The current build number of less.php
      */
-    const VERSION = '1.7.0.1';
+    const VERSION = '1.7.0.2';
     
     /**
      * The less.js version that this build should be compatible with

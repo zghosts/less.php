@@ -23,6 +23,8 @@ class lessc
 
     protected $allParsedFiles = array();
 
+    protected $libFunctions = array();
+
     protected $registeredVars = array();
 
     private $formatterName;
@@ -53,10 +55,12 @@ class lessc
 
     public function registerFunction($name, $func)
     {
+        $this->libFunctions[$name] = $func;
     }
 
     public function unregisterFunction($name)
     {
+        unset($this->libFunctions[$name]);
     }
 
     public function setVariables($variables)
@@ -92,6 +96,11 @@ class lessc
         if (count($this->registeredVars)) {
             $parser->ModifyVars($this->registeredVars);
         }
+
+        foreach ($this->libFunctions as $name => $func) {
+            $parser->registerFunction($name, $func);
+        }
+
         $parser->parse($buffer);
 
         return $parser->getCss();
@@ -120,6 +129,11 @@ class lessc
         if (count($this->registeredVars)) {
             $parser->ModifyVars($this->registeredVars);
         }
+
+        foreach ($this->libFunctions as $name => $func) {
+            $parser->registerFunction($name, $func);
+        }
+
         $parser->parse($string);
         $out = $parser->getCss();
 
@@ -154,6 +168,11 @@ class lessc
         if (count($this->registeredVars)) {
             $parser->ModifyVars($this->registeredVars);
         }
+
+        foreach ($this->libFunctions as $name => $func) {
+            $parser->registerFunction($name, $func);
+        }
+
         $parser->parseFile($fname);
         $out = $parser->getCss();
 
@@ -179,7 +198,6 @@ class lessc
         }
         return false;
     }
-
 
     /**
      * Execute lessphp on a .less file or a lessphp cache structure

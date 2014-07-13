@@ -376,7 +376,7 @@ class Less_Parser
     public function ModifyVars($vars)
     {
 
-        $this->input = $this->serializeVars($vars);
+        $this->input = Less_Parser::serializeVars($vars);
         $this->_parse();
 
         return $this;
@@ -2841,7 +2841,7 @@ class Less_Parser
      *
      * @return string
      */
-    public function serializeVars($vars)
+    public static function serializeVars($vars)
     {
         $s = '';
 
