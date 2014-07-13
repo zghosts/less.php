@@ -115,15 +115,15 @@ class Less_Exception_Chunk extends Less_Exception_Parser
                     $matched                = 0;
                     $currentChunkStartIndex = $this->parserCurrentIndex;
                     for ($this->parserCurrentIndex = $this->parserCurrentIndex + 1; $this->parserCurrentIndex < $this->inputLength; $this->parserCurrentIndex++) {
-                        $cc2 = $this->charCode($this->parserCurrentIndex);
-                        if ($cc2 > 96) {
+                        $nestedCharCode = $this->charCode($this->parserCurrentIndex);
+                        if ($nestedCharCode > 96) {
                             continue;
                         }
-                        if ($cc2 == $charCode) {
+                        if ($nestedCharCode == $charCode) {
                             $matched = 1;
                             break;
                         }
-                        if ($cc2 == 92) { // \
+                        if ($nestedCharCode == 92) { // \
                             if ($this->parserCurrentIndex == $this->inputLength - 1) {
                                 return $this->fail("unescaped `\\`");
                             }
@@ -140,25 +140,25 @@ class Less_Exception_Chunk extends Less_Exception_Parser
                     if ($parentLevel || ($this->parserCurrentIndex == $this->inputLength - 1)) {
                         continue;
                     }
-                    $cc2 = $this->charCode($this->parserCurrentIndex + 1);
-                    if ($cc2 == 47) {
+                    $nestedCharCode = $this->charCode($this->parserCurrentIndex + 1);
+                    if ($nestedCharCode == 47) {
                         // //, find lnfeed
                         for ($this->parserCurrentIndex = $this->parserCurrentIndex + 2; $this->parserCurrentIndex < $this->inputLength; $this->parserCurrentIndex++) {
-                            $cc2 = $this->charCode($this->parserCurrentIndex);
-                            if (($cc2 <= 13) && (($cc2 == 10) || ($cc2 == 13))) {
+                            $nestedCharCode = $this->charCode($this->parserCurrentIndex);
+                            if (($nestedCharCode <= 13) && (($nestedCharCode == 10) || ($nestedCharCode == 13))) {
                                 break;
                             }
                         }
                     } else {
-                        if ($cc2 == 42) {
+                        if ($nestedCharCode == 42) {
                             // /*, find */
                             $lastMultiComment = $currentChunkStartIndex = $this->parserCurrentIndex;
                             for ($this->parserCurrentIndex = $this->parserCurrentIndex + 2; $this->parserCurrentIndex < $this->inputLength - 1; $this->parserCurrentIndex++) {
-                                $cc2 = $this->charCode($this->parserCurrentIndex);
-                                if ($cc2 == 125) {
+                                $nestedCharCode = $this->charCode($this->parserCurrentIndex);
+                                if ($nestedCharCode == 125) {
                                     $lastMultiCommentEndBrace = $this->parserCurrentIndex;
                                 }
-                                if ($cc2 != 42) {
+                                if ($nestedCharCode != 42) {
                                     continue;
                                 }
                                 if ($this->charCode($this->parserCurrentIndex + 1) == 47) {
