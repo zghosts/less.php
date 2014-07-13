@@ -196,7 +196,7 @@ class Less_Tree_Selector extends Less_Tree
 
         $extendList = array();
         foreach ($this->extendList as $el) {
-            $extendList[] = $el->compile($el);
+            $extendList[] = $el->compile($env);
         }
 
         $evaldCondition = false;

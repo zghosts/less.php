@@ -103,7 +103,7 @@ class Less_Tree implements Less_NodeInterface
      *
      * @return $this|Less_NodeInterface
      */
-    public function compile($env)
+    public function compile($env = null)
     {
         return $this;
     }

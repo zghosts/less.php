@@ -70,7 +70,7 @@ class Less_Tree_Call extends Less_Tree
      * @return Less_Tree_Call|Less_Tree_Keyword|mixed|null
      * @throws Less_Exception_Compiler
      */
-    public function compile($env = null)
+    public function compile($env)
     {
         $args = array();
         foreach ($this->args as $a) {
@@ -98,7 +98,7 @@ class Less_Tree_Call extends Less_Tree
 
         $result = null;
         if ($nameLC === 'default') {
-            $result = Less_Tree_DefaultFunc::compile();
+            $result = Less_Tree_DefaultFunc::compile($env);
 
         } else {
 

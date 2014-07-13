@@ -16,7 +16,7 @@ class Less_Tree_DefaultFunc
      * @return Less_Tree_Keyword
      * @throws Exception
      */
-    public static function compile()
+    public static function compile($env)
     {
         if (self::$error_) {
             throw new Exception(self::$error_);
