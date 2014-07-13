@@ -14,7 +14,7 @@ class Less_Exception_Chunk extends Less_Exception_Parser
 
     protected $emitFrom = 0;
 
-    protected $input_len;
+    protected $inputLength;
 
 
     /**
@@ -35,10 +35,10 @@ class Less_Exception_Chunk extends Less_Exception_Parser
 
         $this->currentFile = $currentFile;
 
-        $this->input     = $input;
-        $this->input_len = strlen($input);
+        $this->input       = $input;
+        $this->inputLength = strlen($input);
 
-        $this->Chunks();
+        $this->chunks();
         $this->genMessage();
     }
 
@@ -48,34 +48,34 @@ class Less_Exception_Chunk extends Less_Exception_Parser
      * We don't actually need the chunks
      *
      */
-    protected function Chunks()
+    protected function chunks()
     {
         $level                    = 0;
-        $parenLevel               = 0;
+        $parentLevel              = 0;
         $lastMultiCommentEndBrace = null;
         $lastOpening              = null;
         $lastMultiComment         = null;
-        $lastParen                = null;
+        $lastParent               = null;
 
-        for ($this->parserCurrentIndex = 0; $this->parserCurrentIndex < $this->input_len; $this->parserCurrentIndex++) {
-            $cc = $this->CharCode($this->parserCurrentIndex);
-            if ((($cc >= 97) && ($cc <= 122)) || ($cc < 34)) {
+        for ($this->parserCurrentIndex = 0; $this->parserCurrentIndex < $this->inputLength; $this->parserCurrentIndex++) {
+            $charCode = $this->charCode($this->parserCurrentIndex);
+            if ((($charCode >= 97) && ($charCode <= 122)) || ($charCode < 34)) {
                 // a-z or whitespace
                 continue;
             }
 
-            switch ($cc) {
+            switch ($charCode) {
 
                 // (
                 case 40:
-                    $parenLevel++;
-                    $lastParen = $this->parserCurrentIndex;
+                    $parentLevel++;
+                    $lastParent = $this->parserCurrentIndex;
                     continue;
 
                 // )
                 case 41:
-                    $parenLevel--;
-                    if ($parenLevel < 0) {
+                    $parentLevel--;
+                    if ($parentLevel < 0) {
                         return $this->fail("missing opening `(`");
                     }
                     continue;
@@ -102,7 +102,7 @@ class Less_Exception_Chunk extends Less_Exception_Parser
                     continue;
                 // \
                 case 92:
-                    if ($this->parserCurrentIndex < $this->input_len - 1) {
+                    if ($this->parserCurrentIndex < $this->inputLength - 1) {
                         $this->parserCurrentIndex++;
                         continue;
                     }
@@ -114,17 +114,17 @@ class Less_Exception_Chunk extends Less_Exception_Parser
                 case 96:
                     $matched                = 0;
                     $currentChunkStartIndex = $this->parserCurrentIndex;
-                    for ($this->parserCurrentIndex = $this->parserCurrentIndex + 1; $this->parserCurrentIndex < $this->input_len; $this->parserCurrentIndex++) {
-                        $cc2 = $this->CharCode($this->parserCurrentIndex);
+                    for ($this->parserCurrentIndex = $this->parserCurrentIndex + 1; $this->parserCurrentIndex < $this->inputLength; $this->parserCurrentIndex++) {
+                        $cc2 = $this->charCode($this->parserCurrentIndex);
                         if ($cc2 > 96) {
                             continue;
                         }
-                        if ($cc2 == $cc) {
+                        if ($cc2 == $charCode) {
                             $matched = 1;
                             break;
                         }
                         if ($cc2 == 92) { // \
-                            if ($this->parserCurrentIndex == $this->input_len - 1) {
+                            if ($this->parserCurrentIndex == $this->inputLength - 1) {
                                 return $this->fail("unescaped `\\`");
                             }
                             $this->parserCurrentIndex++;
@@ -133,18 +133,18 @@ class Less_Exception_Chunk extends Less_Exception_Parser
                     if ($matched) {
                         continue;
                     }
-                    return $this->fail("unmatched `" . chr($cc) . "`", $currentChunkStartIndex);
+                    return $this->fail("unmatched `" . chr($charCode) . "`", $currentChunkStartIndex);
 
                 // /, check for comment
                 case 47:
-                    if ($parenLevel || ($this->parserCurrentIndex == $this->input_len - 1)) {
+                    if ($parentLevel || ($this->parserCurrentIndex == $this->inputLength - 1)) {
                         continue;
                     }
-                    $cc2 = $this->CharCode($this->parserCurrentIndex + 1);
+                    $cc2 = $this->charCode($this->parserCurrentIndex + 1);
                     if ($cc2 == 47) {
                         // //, find lnfeed
-                        for ($this->parserCurrentIndex = $this->parserCurrentIndex + 2; $this->parserCurrentIndex < $this->input_len; $this->parserCurrentIndex++) {
-                            $cc2 = $this->CharCode($this->parserCurrentIndex);
+                        for ($this->parserCurrentIndex = $this->parserCurrentIndex + 2; $this->parserCurrentIndex < $this->inputLength; $this->parserCurrentIndex++) {
+                            $cc2 = $this->charCode($this->parserCurrentIndex);
                             if (($cc2 <= 13) && (($cc2 == 10) || ($cc2 == 13))) {
                                 break;
                             }
@@ -153,19 +153,19 @@ class Less_Exception_Chunk extends Less_Exception_Parser
                         if ($cc2 == 42) {
                             // /*, find */
                             $lastMultiComment = $currentChunkStartIndex = $this->parserCurrentIndex;
-                            for ($this->parserCurrentIndex = $this->parserCurrentIndex + 2; $this->parserCurrentIndex < $this->input_len - 1; $this->parserCurrentIndex++) {
-                                $cc2 = $this->CharCode($this->parserCurrentIndex);
+                            for ($this->parserCurrentIndex = $this->parserCurrentIndex + 2; $this->parserCurrentIndex < $this->inputLength - 1; $this->parserCurrentIndex++) {
+                                $cc2 = $this->charCode($this->parserCurrentIndex);
                                 if ($cc2 == 125) {
                                     $lastMultiCommentEndBrace = $this->parserCurrentIndex;
                                 }
                                 if ($cc2 != 42) {
                                     continue;
                                 }
-                                if ($this->CharCode($this->parserCurrentIndex + 1) == 47) {
+                                if ($this->charCode($this->parserCurrentIndex + 1) == 47) {
                                     break;
                                 }
                             }
-                            if ($this->parserCurrentIndex == $this->input_len - 1) {
+                            if ($this->parserCurrentIndex == $this->inputLength - 1) {
                                 return $this->fail("missing closing `*/`", $currentChunkStartIndex);
                             }
                         }
@@ -174,8 +174,8 @@ class Less_Exception_Chunk extends Less_Exception_Parser
 
                 // *, check for unmatched */
                 case 42:
-                    if (($this->parserCurrentIndex < $this->input_len - 1) &&
-                        ($this->CharCode($this->parserCurrentIndex + 1) == 47)
+                    if (($this->parserCurrentIndex < $this->inputLength - 1) &&
+                        ($this->charCode($this->parserCurrentIndex + 1) == 47)
                     ) {
                         return $this->fail("unmatched `/*`");
                     }
@@ -190,8 +190,8 @@ class Less_Exception_Chunk extends Less_Exception_Parser
                 return $this->fail("missing closing `}`", $lastOpening);
             }
         } else {
-            if ($parenLevel !== 0) {
-                return $this->fail("missing closing `)`", $lastParen);
+            if ($parentLevel !== 0) {
+                return $this->fail("missing closing `)`", $lastParent);
             }
         }
 
@@ -207,7 +207,7 @@ class Less_Exception_Chunk extends Less_Exception_Parser
      *
      * @return int
      */
-    public function CharCode($pos)
+    public function charCode($pos)
     {
         return ord($this->input[$pos]);
     }
