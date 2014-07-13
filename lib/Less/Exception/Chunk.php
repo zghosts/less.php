@@ -51,11 +51,11 @@ class Less_Exception_Chunk extends Less_Exception_Parser
     protected function chunks()
     {
         $level                    = 0;
-        $parentLevel              = 0;
+        $parenLevel               = 0;
         $lastMultiCommentEndBrace = null;
         $lastOpening              = null;
         $lastMultiComment         = null;
-        $lastParent               = null;
+        $lastParen                = null;
 
         for ($this->parserCurrentIndex = 0; $this->parserCurrentIndex < $this->inputLength; $this->parserCurrentIndex++) {
             $charCode = $this->charCode($this->parserCurrentIndex);
@@ -68,14 +68,14 @@ class Less_Exception_Chunk extends Less_Exception_Parser
 
                 // (
                 case 40:
-                    $parentLevel++;
-                    $lastParent = $this->parserCurrentIndex;
+                    $parenLevel++;
+                    $lastParen = $this->parserCurrentIndex;
                     continue;
 
                 // )
                 case 41:
-                    $parentLevel--;
-                    if ($parentLevel < 0) {
+                    $parenLevel--;
+                    if ($parenLevel < 0) {
                         return $this->fail("missing opening `(`");
                     }
                     continue;
@@ -137,7 +137,7 @@ class Less_Exception_Chunk extends Less_Exception_Parser
 
                 // /, check for comment
                 case 47:
-                    if ($parentLevel || ($this->parserCurrentIndex == $this->inputLength - 1)) {
+                    if ($parenLevel || ($this->parserCurrentIndex == $this->inputLength - 1)) {
                         continue;
                     }
                     $nestedCharCode = $this->charCode($this->parserCurrentIndex + 1);
@@ -190,8 +190,8 @@ class Less_Exception_Chunk extends Less_Exception_Parser
                 return $this->fail("missing closing `}`", $lastOpening);
             }
         } else {
-            if ($parentLevel !== 0) {
-                return $this->fail("missing closing `)`", $lastParent);
+            if ($parenLevel !== 0) {
+                return $this->fail("missing closing `)`", $lastParen);
             }
         }
 
